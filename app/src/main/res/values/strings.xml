@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WalletForTwo</string>
+    <string name="icon_calendar">icon_calendar</string>
+    <string name="label_today">今日</string>
+    <string name="label_remarks">備考</string>
+    <string name="label_cancel">キャンセル</string>
+    <string name="label_add">追加</string>
+    <string name="date">%d/%d/%d</string>
 </resources>
