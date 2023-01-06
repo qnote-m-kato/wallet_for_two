@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.walletfortwo.view.fragment.HomeFragment"
+        android:label="homeFragment">
+        <action
+            android:id="@+id/home_to_user"
+            app:destination="@id/userFragment"/>
+        <action
+            android:id="@+id/home_to_userAdd"
+            app:destination="@id/userAddFragment"/>
+        <action
+            android:id="@+id/home_to_expenditureItem"
+            app:destination="@id/expenditureItemAddFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/lifeCostFragment"
+        android:name="com.example.walletfortwo.view.fragment.LifeCostFragment"
+        android:label="lifeCostFragment">
+        <action
+            android:id="@+id/lifeCost_to_lifeCostAdd"
+            app:destination="@id/lifeCostAddFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/lifeCostAddFragment"
+        android:name="com.example.walletfortwo.view.fragment.LifeCostAddFragment"
+        android:label="lifeCostAddFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/giveCostFragment"
+        android:name="com.example.walletfortwo.view.fragment.GiveCostFragment"
+        android:label="giveCostFragment">
+        <action
+            android:id="@+id/giveCost_to_giveCostAdd"
+            app:destination="@id/giveCostAddFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/giveCostAddFragment"
+        android:name="com.example.walletfortwo.view.fragment.GiveCostAddFragment"
+        android:label="giveCostAddFragment">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.walletfortwo.view.fragment.UserFragment"
+        android:label="userFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/userAddFragment"
+        android:name="com.example.walletfortwo.view.fragment.UserAddFragment"
+        android:label="userAddFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/expenditureItemAddFragment"
+        android:name="com.example.walletfortwo.view.fragment.ExpenditureItemAddFragment"
+        android:label="expenditureItemAddFragment">
+    </fragment>
+</navigation>
