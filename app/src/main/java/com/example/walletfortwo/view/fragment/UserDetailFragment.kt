@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.walletfortwo.databinding.FragmentUserBinding
+import androidx.navigation.fragment.findNavController
+import com.example.walletfortwo.databinding.FragmentUserDetailBinding
 
 //人の詳細画面
-class UserFragment : Fragment() {
+class UserDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragmentUserBinding.inflate(inflater, container, false).apply {
-
+        return FragmentUserDetailBinding.inflate(inflater, container, false).apply {
+            buttonBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }.root
     }
 }

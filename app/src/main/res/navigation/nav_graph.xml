@@ -8,8 +8,8 @@
         android:name="com.example.walletfortwo.view.fragment.HomeFragment"
         android:label="homeFragment">
         <action
-            android:id="@+id/home_to_user"
-            app:destination="@id/userFragment"/>
+            android:id="@+id/home_to_user_detail"
+            app:destination="@id/userDetailFragment"/>
         <action
             android:id="@+id/home_to_userAdd"
             app:destination="@id/userAddFragment"/>
@@ -50,9 +50,9 @@
 
 
     <fragment
-        android:id="@+id/userFragment"
-        android:name="com.example.walletfortwo.view.fragment.UserFragment"
-        android:label="userFragment">
+        android:id="@+id/userDetailFragment"
+        android:name="com.example.walletfortwo.view.fragment.UserDetailFragment"
+        android:label="userDetailFragment">
     </fragment>
 
     <fragment
