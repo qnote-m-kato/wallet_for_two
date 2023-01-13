@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/ic_user"
+            android:id="@+id/ic_expenditure"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -19,9 +19,9 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="5dp"
             android:background="@color/purple_200"
-            app:layout_constraintTop_toBottomOf="@id/ic_user"
-            app:layout_constraintStart_toStartOf="@id/ic_user"
-            app:layout_constraintEnd_toEndOf="@id/ic_user"/>
+            app:layout_constraintTop_toBottomOf="@id/ic_expenditure"
+            app:layout_constraintStart_toStartOf="@id/ic_expenditure"
+            app:layout_constraintEnd_toEndOf="@id/ic_expenditure"/>
 
         <EditText
             android:id="@+id/edit_text_money"
@@ -36,7 +36,7 @@
             android:inputType="number"
             android:hint="123,000"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ic_user"
+            app:layout_constraintStart_toEndOf="@id/ic_expenditure"
             app:layout_constraintEnd_toEndOf="parent" />
         <View
             android:layout_width="0dp"
@@ -44,10 +44,7 @@
             android:layout_marginHorizontal="10dp"
             android:background="@color/purple_200"
             app:layout_constraintTop_toBottomOf="@id/edit_text_money"
-            app:layout_constraintStart_toEndOf="@id/ic_user"
+            app:layout_constraintStart_toEndOf="@id/ic_expenditure"
             app:layout_constraintEnd_toEndOf="@id/edit_text_money"/>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
