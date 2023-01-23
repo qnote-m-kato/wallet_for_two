@@ -37,7 +37,5 @@
             app:layout_constraintStart_toStartOf="@id/edit_text_remarks"
             app:layout_constraintEnd_toEndOf="@id/edit_text_remarks"/>
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
