@@ -5,8 +5,11 @@ import com.example.walletfortwo.model.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM User LIMIT 1")
-    fun get(): User
+    @Query("SELECT * FROM User")
+    fun getAll(): List<User>
+
+    @Query("SELECT * FROM User WHERE name = :name")
+    fun get(name: String): User
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
@@ -14,7 +17,6 @@ interface UserDao {
     @Update
     fun updateUser(user: User)
 
-    //TODO ログインかログアウトの時に削除する
     @Delete
     fun delete(user: User)
 }

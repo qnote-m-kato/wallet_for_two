@@ -33,9 +33,9 @@ class GiveCostAdapter(
             icArrow.visibility = View.VISIBLE
             icUserB.visibility = View.VISIBLE
 
-            icUserA.setColorFilter(list[position].fromUser.color)
-            icUserB.setColorFilter(list[position].toUser.color)
-            icExpenditure.setImageResource(list[position].expenditureItem.resource)
+            icUserA.setColorFilter(list[position].fromUserResource)
+            icUserB.setColorFilter(list[position].toUserResource)
+            icExpenditure.setImageResource(list[position].expenditureItem)
             textMoney.text = list[position].cost.toString()
 
             if (list[position].remarks != null) {

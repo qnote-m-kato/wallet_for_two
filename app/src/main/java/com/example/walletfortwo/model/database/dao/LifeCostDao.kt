@@ -6,7 +6,10 @@ import com.example.walletfortwo.model.LifeCost
 @Dao
 interface LifeCostDao {
     @Query("SELECT * FROM LifeCost")
-    fun get(): LifeCost
+    fun getAll(): List<LifeCost>
+
+    @Query("SELECT * FROM LifeCost WHERE userName = :name")
+    fun getListWhereName(name: String): List<LifeCost>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(lifeCost: LifeCost)

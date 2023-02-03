@@ -33,8 +33,8 @@ class LifeCostAdapter(
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
-            icUserA.setColorFilter(list[position].user.color)
-            icExpenditure.setImageResource(list[position].expenditureItem.resource)
+            icUserA.setColorFilter(list[position].userResource)
+            icExpenditure.setImageResource(list[position].expenditureItem)
             textMoney.text = list[position].cost.toString()
 
             if (list[position].remarks != null) {
