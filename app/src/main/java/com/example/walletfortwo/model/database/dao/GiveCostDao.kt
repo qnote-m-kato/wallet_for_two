@@ -8,7 +8,7 @@ interface GiveCostDao {
     @Query("SELECT * FROM GiveCost")
     fun getAll(): List<GiveCost>
 
-    @Query("SELECT * FROM GiveCost WHERE userName = :name")
+    @Query("SELECT * FROM GiveCost WHERE fromUserName = :name")
     fun getListWhereName(name: String): List<GiveCost>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

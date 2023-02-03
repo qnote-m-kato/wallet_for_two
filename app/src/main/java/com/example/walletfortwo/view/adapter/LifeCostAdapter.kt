@@ -30,11 +30,15 @@ class LifeCostAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
+            root.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
             icUserA.setColorFilter(list[position].userResource)
-            icExpenditure.setImageResource(list[position].expenditureItem)
+            icExpenditure.setImageResource(R.drawable.ic_add)
             textMoney.text = list[position].cost.toString()
 
             if (list[position].remarks != null) {
