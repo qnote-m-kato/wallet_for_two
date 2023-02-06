@@ -35,7 +35,7 @@ class GiveCostAdapter(
 
             icUserA.setColorFilter(list[position].fromUserResource)
             icUserB.setColorFilter(list[position].toUserResource)
-            icExpenditure.setImageResource(list[position].expenditureItem)
+            icExpenditure.setImageResource(list[position].expenditureItemResource)
             textMoney.text = list[position].cost.toString()
 
             if (list[position].remarks != null) {

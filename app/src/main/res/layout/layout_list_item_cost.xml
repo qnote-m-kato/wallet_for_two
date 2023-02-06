@@ -79,7 +79,7 @@
             android:background="@color/purple_200"
             app:layout_constraintTop_toBottomOf="@id/text_money"
             app:layout_constraintStart_toEndOf="@id/ic_expenditure"
-            app:layout_constraintEnd_toEndOf="@id/text_money"/>
+            app:layout_constraintEnd_toStartOf="@id/spacer"/>
 
         <ImageView
             android:id="@+id/ic_down"
@@ -103,6 +103,14 @@
             android:contentDescription="@string/icon_calendar"
             android:visibility="gone"
             app:tint="@color/purple_200" />
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_remarks"

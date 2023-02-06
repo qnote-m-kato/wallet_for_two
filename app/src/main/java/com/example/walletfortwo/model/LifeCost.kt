@@ -10,7 +10,8 @@ data class LifeCost(
     val date: String,
     val userName: String,
     val userResource: Int,
-    val expenditureItem: Int,
+    val expenditureItem: String,
+    val expenditureItemResource: Int,
     val cost: Int,
     val remarks: String?
 )

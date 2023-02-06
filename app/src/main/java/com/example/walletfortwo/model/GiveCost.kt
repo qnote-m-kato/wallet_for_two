@@ -12,7 +12,8 @@ data class GiveCost(
     val fromUserResource: Int,
     val toUserName: String,
     val toUserResource: Int,
-    val expenditureItem: Int,
+    val expenditureItem: String,
+    val expenditureItemResource: Int,
     val cost: Int,
     val remarks: String?
 )

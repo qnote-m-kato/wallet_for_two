@@ -9,11 +9,11 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_user"
+            android:src="@drawable/ic_yen"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/icon_calendar"
-            app:tint="@color/purple_200" />
+            app:tint="@color/gray" />
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"

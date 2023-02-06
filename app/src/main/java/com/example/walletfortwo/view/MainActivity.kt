@@ -24,14 +24,14 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 UserRepository.updateUser(application, User("Myu", R.color.teal_200, 0))
                 UserRepository.updateUser(application, User("kobayashi", R.color.purple_700, 0))
-                insertItem("食費", R.drawable.ic_food)
-                insertItem("ガス代", R.drawable.ic_fire)
                 insertItem("家賃", R.drawable.ic_home)
-                insertItem("電気代", R.drawable.ic_light)
-                insertItem("その他", R.drawable.ic_more)
+                insertItem("食費", R.drawable.ic_food)
                 insertItem("消耗品費", R.drawable.ic_store)
+                insertItem("電気代", R.drawable.ic_light)
+                insertItem("ガス代", R.drawable.ic_fire)
                 insertItem("水道代", R.drawable.ic_water)
                 insertItem("回線代", R.drawable.ic_wifi)
+                insertItem("その他", R.drawable.ic_more)
             }
         }
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

@@ -1,6 +1,7 @@
 package com.example.walletfortwo.view.adapter
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,16 +38,17 @@ class LifeCostAdapter(
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
-            icUserA.setColorFilter(list[position].userResource)
-            icExpenditure.setImageResource(R.drawable.ic_add)
+            icUserA.setColorFilter(ContextCompat.getColor(context, list[position].userResource), PorterDuff.Mode.SRC_IN)
+            icExpenditure.setImageResource(list[position].expenditureItemResource)
             textMoney.text = list[position].cost.toString()
 
-            if (list[position].remarks != null) {
+            if (list[position].remarks != "") {
+                textRemarks.text = list[position].remarks
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.purple_200))
-                icDown.isClickable = true
+                icDown.isEnabled = true
             } else {
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.gray))
-                icDown.isClickable = false
+                icDown.isEnabled = false
             }
 
             icDown.setOnClickListener {
