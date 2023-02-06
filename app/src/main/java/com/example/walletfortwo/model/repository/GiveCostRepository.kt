@@ -2,6 +2,7 @@ package com.example.walletfortwo.model.repository
 
 import android.app.Application
 import com.example.walletfortwo.model.GiveCost
+import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,6 +27,13 @@ object GiveCostRepository {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.GiveCostDao().insert(giveCost)
+        }
+    }
+
+    suspend fun delete(app: Application, giveCost: GiveCost) {
+        withContext(Dispatchers.IO) {
+            val db = AppDatabase.getInstance(app.applicationContext)
+            db.GiveCostDao().delete(giveCost)
         }
     }
 }

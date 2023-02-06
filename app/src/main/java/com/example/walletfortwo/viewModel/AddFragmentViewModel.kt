@@ -48,11 +48,18 @@ class AddFragmentViewModel(application: Application) : AndroidViewModel(applicat
         return null
     }
 
+    fun getToUser(name: String): User? {
+        userList.forEach {
+            if (it.name != name) {
+                return it
+            }
+        }
+        return null
+    }
+
     fun getUserNames(): ArrayList<String> = userNameList
 
     fun getExpenditureItems(): List<ExpenditureItem> = expenditureItemList
-
-    fun getDefaultExpenditureItem(): ExpenditureItem = expenditureItemList[0]
 
     private fun isEnable(): Boolean {
         return dateValidation.value ?: false &&

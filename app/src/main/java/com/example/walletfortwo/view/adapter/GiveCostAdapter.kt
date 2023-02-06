@@ -30,20 +30,24 @@ class GiveCostAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
+            root.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
             icArrow.visibility = View.VISIBLE
             icUserB.visibility = View.VISIBLE
 
-            icUserA.setColorFilter(list[position].fromUserResource)
-            icUserB.setColorFilter(list[position].toUserResource)
+            icUserA.setColorFilter(ContextCompat.getColor(context, list[position].fromUserResource))
+            icUserB.setColorFilter(ContextCompat.getColor(context, list[position].toUserResource))
             icExpenditure.setImageResource(list[position].expenditureItemResource)
             textMoney.text = list[position].cost.toString()
 
             if (list[position].remarks != null) {
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.purple_200))
-                icDown.isClickable = true
+                icDown.isEnabled = true
             } else {
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.gray))
-                icDown.isClickable = false
+                icDown.isEnabled = false
             }
 
             icDown.setOnClickListener {

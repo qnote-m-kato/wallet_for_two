@@ -12,13 +12,13 @@ import kotlinx.coroutines.launch
 class GiveCostViewModel(application: Application) : AndroidViewModel(application) {
     private val app: Application = application
     private val giveCosts: MutableList<GiveCost> = mutableListOf()
-    private val addFlag: MutableLiveData<Boolean> = MutableLiveData()
+    private val changeFlag: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         viewModelScope.launch {
             giveCosts.clear()
             giveCosts.addAll(GiveCostRepository.getAll(app))
-            addFlag.postValue(true)
+            changeFlag.postValue(true)
         }
     }
 
@@ -26,11 +26,21 @@ class GiveCostViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             GiveCostRepository.insert(app, giveCost)
             giveCosts.add(giveCost)
-            addFlag.postValue(true)
+            changeFlag.postValue(true)
         }
     }
 
-    fun getList(): List<GiveCost> = giveCosts
+    fun delete(giveCost: GiveCost) {
+        viewModelScope.launch {
+            GiveCostRepository.delete(app, giveCost)
+            giveCosts.remove(giveCost)
+            changeFlag.postValue(true)
+        }
+    }
 
-    fun getFlag(): LiveData<Boolean> = addFlag
+    fun getList(): List<GiveCost> {
+        giveCosts.reverse()
+        return giveCosts
+    }
+    fun getFlag(): LiveData<Boolean> = changeFlag
 }
