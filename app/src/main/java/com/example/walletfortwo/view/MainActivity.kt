@@ -6,7 +6,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.walletfortwo.R
+import com.example.walletfortwo.model.ExpenditureItem
 import com.example.walletfortwo.model.User
+import com.example.walletfortwo.model.repository.ExpenditureItemRepository
 import com.example.walletfortwo.model.repository.UserRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +24,21 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 UserRepository.updateUser(application, User("Myu", R.color.teal_200, 0))
                 UserRepository.updateUser(application, User("kobayashi", R.color.purple_700, 0))
+                insertItem("食費", R.drawable.ic_food)
+                insertItem("ガス代", R.drawable.ic_fire)
+                insertItem("家賃", R.drawable.ic_home)
+                insertItem("電気代", R.drawable.ic_light)
+                insertItem("その他", R.drawable.ic_more)
+                insertItem("消耗品費", R.drawable.ic_store)
+                insertItem("水道代", R.drawable.ic_water)
+                insertItem("回線代", R.drawable.ic_wifi)
             }
         }
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navHostFragment.navController)
+    }
+
+    private suspend fun insertItem(name: String, id: Int) {
+        ExpenditureItemRepository.insert(application, ExpenditureItem(name, id))
     }
 }

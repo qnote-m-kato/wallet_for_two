@@ -6,20 +6,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.walletfortwo.commaToArray
+import com.example.walletfortwo.model.ExpenditureItem
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.User
+import com.example.walletfortwo.model.database.dao.ExpenditureItemDao
 import com.example.walletfortwo.model.database.dao.GiveCostDao
 import com.example.walletfortwo.model.database.dao.LifeCostDao
 import com.example.walletfortwo.model.database.dao.UserDao
 import com.example.walletfortwo.toCommaString
 
-@Database(entities = [User::class, LifeCost::class, GiveCost::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, LifeCost::class, GiveCost::class, ExpenditureItem::class], version = 1, exportSchema = false)
 @TypeConverters(TypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun UserDao() : UserDao
     abstract fun LifeCostDao() : LifeCostDao
     abstract fun GiveCostDao() : GiveCostDao
+    abstract fun ExpenditureItemDao(): ExpenditureItemDao
 
     companion object {
         private val DB_NAME = "DB"
