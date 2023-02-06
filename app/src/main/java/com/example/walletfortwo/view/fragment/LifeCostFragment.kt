@@ -1,9 +1,13 @@
 package com.example.walletfortwo.view.fragment
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,7 +45,13 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
     }
 
     override fun onSelect(item: LifeCost) {
-        TODO("編集画面へ遷移")
+        AlertDialog.Builder(requireContext())
+            .setTitle("この項目を削除")
+            .setPositiveButton("OK") { _, _ ->
+                viewModel?.delete(item)
+            }
+            .setNegativeButton("Cancel") { _, _ ->}
+            .show()
     }
 
     override fun onAdd(lifeCost: LifeCost) {

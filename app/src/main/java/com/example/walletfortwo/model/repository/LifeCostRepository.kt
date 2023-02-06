@@ -29,4 +29,10 @@ object LifeCostRepository {
         }
     }
 
+    suspend fun delete(app: Application, lifeCost: LifeCost) {
+        withContext(Dispatchers.IO) {
+            val db = AppDatabase.getInstance(app.applicationContext)
+            db.LifeCostDao().delete(lifeCost)
+        }
+    }
 }
