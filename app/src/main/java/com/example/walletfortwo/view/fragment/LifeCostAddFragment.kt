@@ -80,7 +80,7 @@ class LifeCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
                         if (containerMoney.editTextMoney.text.isNotEmpty()) {
                             vm.costValidation.postValue(true)
                         } else {
-                            vm.costValidation.postValue(true)
+                            vm.costValidation.postValue(false)
                         }
                     }
 

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.FragmentHomeBinding
 import com.example.walletfortwo.viewModel.AddFragmentViewModel
 import com.example.walletfortwo.viewModel.HomeViewModel
@@ -29,12 +30,12 @@ class HomeFragment : Fragment() {
                         val userA = it[0]
                         userAContainer.icUser.setColorFilter(ContextCompat.getColor(requireContext(), userA.user.color))
                         userAContainer.textName.text = userA.user.name
-                        userAContainer.textYen.text = userA.totalCost.toString()
+                        userAContainer.textYen.text = getString(R.string.cost_format).format(userA.totalCost)
 
                         val userB = it[1]
                         userBContainer.icUser.setColorFilter(ContextCompat.getColor(requireContext(), userB.user.color))
                         userBContainer.textName.text = userB.user.name
-                        userBContainer.textYen.text = userB.totalCost.toString()
+                        userBContainer.textYen.text = getString(R.string.cost_format).format(userB.totalCost)
                         Log.i("myu", "home observe success")
                     } else {
                         Log.i("myu", "home observe error")

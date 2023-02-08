@@ -28,7 +28,7 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
             list.layoutManager = LinearLayoutManager(requireContext())
             viewModel?.also { vm ->
                 vm.getFlag().observe(viewLifecycleOwner) {
-                    list.adapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, viewLifecycleOwner)
+                    list.adapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
                 }
             }
             addButton.setOnClickListener {

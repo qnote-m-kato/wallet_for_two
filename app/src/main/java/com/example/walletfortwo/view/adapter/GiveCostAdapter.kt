@@ -1,6 +1,7 @@
 package com.example.walletfortwo.view.adapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ class GiveCostAdapter(
     private val list: List<GiveCost>,
     private val context: Context,
     private val listener: OnSelectItemListener,
+    private val resources: Resources,
     private val lifecycleOwner: LifecycleOwner,
 ): RecyclerView.Adapter<GiveCostAdapter.ViewHolder>() {
 
@@ -40,7 +42,7 @@ class GiveCostAdapter(
             icUserA.setColorFilter(ContextCompat.getColor(context, list[position].fromUserResource))
             icUserB.setColorFilter(ContextCompat.getColor(context, list[position].toUserResource))
             icExpenditure.setImageResource(list[position].expenditureItemResource)
-            textMoney.text = list[position].cost.toString()
+            textMoney.text = resources.getString(R.string.money_format).format(list[position].cost)
 
             if (list[position].remarks != null) {
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.purple_200))

@@ -30,7 +30,7 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
             list.layoutManager = LinearLayoutManager(requireContext())
             viewModel?.also { vm ->
                 vm.getFlag().observe(viewLifecycleOwner) {
-                    list.adapter = LifeCostAdapter(vm.getList(), requireContext(), this@LifeCostFragment, viewLifecycleOwner)
+                    list.adapter = LifeCostAdapter(vm.getList(), requireContext(), this@LifeCostFragment, resources, viewLifecycleOwner)
                 }
             }
             addButton.setOnClickListener {
