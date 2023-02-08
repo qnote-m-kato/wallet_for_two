@@ -7,6 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object LifeCostRepository {
+    private val addList: MutableList<LifeCost> = mutableListOf()
+    private val removeList: MutableList<LifeCost> = mutableListOf()
 
     suspend fun getAll(app: Application): List<LifeCost> {
         return withContext(Dispatchers.IO) {
@@ -26,6 +28,7 @@ object LifeCostRepository {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.LifeCostDao().insert(lifeCost)
+            addList.add(lifeCost)
         }
     }
 
@@ -33,6 +36,15 @@ object LifeCostRepository {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.LifeCostDao().delete(lifeCost)
+            removeList.add(lifeCost)
         }
+    }
+
+    fun getAddList(): List<LifeCost> = addList
+    fun getRemoveList(): List<LifeCost> = removeList
+
+    fun clearNotReflectedList() {
+        addList.clear()
+        removeList.clear()
     }
 }

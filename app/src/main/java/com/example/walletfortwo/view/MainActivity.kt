@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
-                UserRepository.updateUser(application, User("Myu", R.color.teal_200, 0))
-                UserRepository.updateUser(application, User("kobayashi", R.color.purple_700, 0))
+                UserRepository.updateUser(application, User("Myu", R.color.teal_200))
+                UserRepository.updateUser(application, User("kobayashi", R.color.purple_700))
                 insertItem("家賃", R.drawable.ic_home)
                 insertItem("食費", R.drawable.ic_food)
                 insertItem("消耗品費", R.drawable.ic_store)

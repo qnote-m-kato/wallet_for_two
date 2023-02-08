@@ -53,7 +53,6 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
     }
 
     override fun onAdd(giveCost: GiveCost) {
-        Log.i("myu", "onAdd")
         viewModel?.add(giveCost)
     }
 }
