@@ -2,6 +2,8 @@ package com.example.walletfortwo.model.repository
 
 import android.app.Application
 import android.content.res.Resources
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.walletfortwo.R
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
@@ -12,10 +14,12 @@ import kotlinx.coroutines.withContext
 
 object UserDetailRepository {
     private val userDetails: MutableList<UserDetail> = mutableListOf()
+    private val update: MutableLiveData<Boolean> = MutableLiveData()
 
-    suspend fun getUserDetails(app: Application, users: List<User>): List<UserDetail> {
-        return withContext(Dispatchers.IO) {
-            val returnList: MutableList<UserDetail> = mutableListOf()
+    suspend fun initUserDetail(app: Application) {
+        withContext(Dispatchers.IO) {
+            userDetails.clear()
+            val users = UserRepository.getUserList(app)
             users.forEach { user ->
                 val lifeCosts = LifeCostRepository.getListWhereName(app, user.name)
                 val giveFromCosts = GiveCostRepository.getListWhereFromName(app, user.name)
@@ -33,61 +37,64 @@ object UserDetailRepository {
                 giveToCosts.forEach {
                     total -= it.cost
                 }
-
-                LifeCostRepository.clearNotReflectedList()
-                GiveCostRepository.clearNotReflectedList()
-                returnList.add(UserDetail(user, total, lifeCosts, giveFromCosts, giveToCosts))
+                userDetails.add(UserDetail(user, total,
+                    lifeCosts.toMutableList(), giveFromCosts.toMutableList(), giveToCosts.toMutableList()))
             }
-
-            return@withContext returnList
+            update.postValue(true)
         }
     }
 
-    fun updateUserDetails(_userDetails: List<UserDetail>): List<UserDetail> {
-        val returnList: MutableList<UserDetail> = mutableListOf()
-        val lifeAdds = LifeCostRepository.getAddList()
-        val lifeRemoves = LifeCostRepository.getRemoveList()
-        val giveAdds = GiveCostRepository.getAddList()
-        val giveRemoves = GiveCostRepository.getRemoveList()
-
-        _userDetails.forEach { user ->
-            lifeAdds.forEach {
-                if (user.user.name == it.userName) {
-                    user.totalCost += it.cost
-                }
+    fun updateUserDetailUser(name: String, user: User) {
+        userDetails.forEach {
+            if (it.user.name == name) {
+                it.user.name = user.name
+                it.user.color = user.color
+                update.postValue(true)
+                return
             }
-            lifeRemoves.forEach {
-                if (user.user.name == it.userName) {
-                    user.totalCost -= it.cost
-                }
-            }
-
-            giveAdds.forEach {
-                if (user.user.name == it.fromUserName) {
-                    user.totalCost += it.cost
-                } else {
-                    user.totalCost -= it.cost
-                }
-            }
-            giveRemoves.forEach {
-                if (user.user.name == it.fromUserName) {
-                    user.totalCost -= it.cost
-                } else {
-                    user.totalCost += it.cost
-                }
-            }
-            returnList.add(user)
         }
-
-        GiveCostRepository.clearNotReflectedList()
-        LifeCostRepository.clearNotReflectedList()
-
-        return returnList
     }
 
-    fun setUserDetails(_userDetails: List<UserDetail>) {
-        userDetails.clear()
-        userDetails.addAll(_userDetails)
+    fun updateUserDetailLifeCost(isAdd: Boolean, lifeCost: LifeCost) {
+        userDetails.forEach {
+            if (it.user.name == lifeCost.userName) {
+                if (isAdd) {
+                    it.lifeCosts.add(lifeCost)
+                    it.totalCost += lifeCost.cost
+                } else {
+                    it.lifeCosts.remove(lifeCost)
+                    it.totalCost -= lifeCost.cost
+                }
+                update.postValue(true)
+                return
+            }
+        }
+    }
+
+    fun updateUserDetailGiveCost(isAdd: Boolean, giveCost: GiveCost) {
+        userDetails.forEach {
+            if (it.user.name == giveCost.fromUserName) {
+                if (isAdd) {
+                    it.giveCostsFrom.add(giveCost)
+                    it.totalCost += giveCost.cost
+                } else {
+                    it.giveCostsFrom.remove(giveCost)
+                    it.totalCost -= giveCost.cost
+                }
+                update.postValue(true)
+                return
+            } else {
+                if (isAdd) {
+                    it.giveCostsTo.add(giveCost)
+                    it.totalCost -= giveCost.cost
+                } else {
+                    it.giveCostsTo.remove(giveCost)
+                    it.totalCost += giveCost.cost
+                }
+                update.postValue(true)
+                return
+            }
+        }
     }
 
     fun getUserDetail(name: String, resources: Resources): UserDetail {
@@ -103,4 +110,7 @@ object UserDetailRepository {
         val give = mutableListOf<GiveCost>(GiveCost(0, "empty", "Empty", color, "Empty", color, "Empty", 0, 0, ""))
         return UserDetail(User("Empty", 0), 0, life, give, give)
     }
+
+    fun getUserDetails(): List<UserDetail> = userDetails
+    fun getUpdate(): LiveData<Boolean> = update
 }

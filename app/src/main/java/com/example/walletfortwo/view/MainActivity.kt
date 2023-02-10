@@ -8,8 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.walletfortwo.R
 import com.example.walletfortwo.model.ExpenditureItem
 import com.example.walletfortwo.model.User
-import com.example.walletfortwo.model.repository.ExpenditureItemRepository
-import com.example.walletfortwo.model.repository.UserRepository
+import com.example.walletfortwo.model.repository.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,10 +31,27 @@ class MainActivity : AppCompatActivity() {
                 insertItem("水道代", R.drawable.ic_water)
                 insertItem("回線代", R.drawable.ic_wifi)
                 insertItem("その他", R.drawable.ic_more)
+                UserDetailRepository.initUserDetail(application)
             }
         }
+        observeChanged()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navHostFragment.navController)
+    }
+
+    private fun observeChanged() {
+        LifeCostRepository.getAdd().observe(this) {
+            UserDetailRepository.updateUserDetailLifeCost(true, it)
+        }
+        LifeCostRepository.getRemove().observe(this) {
+            UserDetailRepository.updateUserDetailLifeCost(false, it)
+        }
+        GiveCostRepository.getAdd().observe(this) {
+            UserDetailRepository.updateUserDetailGiveCost(true, it)
+        }
+        GiveCostRepository.getRemove().observe(this) {
+            UserDetailRepository.updateUserDetailGiveCost(false, it)
+        }
     }
 
     private suspend fun insertItem(name: String, id: Int) {

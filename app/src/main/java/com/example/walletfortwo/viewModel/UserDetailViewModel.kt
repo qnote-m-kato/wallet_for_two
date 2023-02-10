@@ -17,9 +17,5 @@ class UserDetailViewModel(application: Application, userName: String, resources:
         userDetail.postValue(UserDetailRepository.getUserDetail(name, res))
     }
 
-    fun updateUser() {
-        userDetail.postValue(UserDetailRepository.getUserDetail(name, res))
-    }
-
     fun getUserDetail(): LiveData<UserDetail> = userDetail
 }

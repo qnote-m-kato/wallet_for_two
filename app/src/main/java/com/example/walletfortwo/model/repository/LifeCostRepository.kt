@@ -1,12 +1,17 @@
 package com.example.walletfortwo.model.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object LifeCostRepository {
+    private val add: MutableLiveData<LifeCost> = MutableLiveData()
+    private val remove: MutableLiveData<LifeCost> = MutableLiveData()
     private val addList: MutableList<LifeCost> = mutableListOf()
     private val removeList: MutableList<LifeCost> = mutableListOf()
 
@@ -28,6 +33,7 @@ object LifeCostRepository {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.LifeCostDao().insert(lifeCost)
+            add.postValue(lifeCost)
             addList.add(lifeCost)
         }
     }
@@ -36,9 +42,13 @@ object LifeCostRepository {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.LifeCostDao().delete(lifeCost)
+            remove.postValue(lifeCost)
             removeList.add(lifeCost)
         }
     }
+
+    fun getAdd(): LiveData<LifeCost> = add
+    fun getRemove(): LiveData<LifeCost> = remove
 
     fun getAddList(): List<LifeCost> = addList
     fun getRemoveList(): List<LifeCost> = removeList

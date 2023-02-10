@@ -19,26 +19,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    private val app: Application = application
     private val userDetails: MutableLiveData<List<UserDetail>> = MutableLiveData()
 
     init {
-        viewModelScope.launch {
-            val users = UserRepository.getUserList(app)
-            userDetails.postValue(UserDetailRepository.getUserDetails(app, users))
-        }
+        val a = UserDetailRepository.getUserDetails()
+        userDetails.postValue(a)
     }
 
-    fun updateUserDetails() {
-        if (userDetails.value != null) {
-            userDetails.postValue(userDetails.value?.let { UserDetailRepository.updateUserDetails(it) })
-        }
-    }
-
-    fun setUserDetails() {
-        if (userDetails.value != null) {
-            UserDetailRepository.setUserDetails(userDetails.value!!)
-        }
+    fun update() {
+        userDetails.postValue(UserDetailRepository.getUserDetails())
     }
 
     fun getUserDetails(): LiveData<List<UserDetail>> = userDetails

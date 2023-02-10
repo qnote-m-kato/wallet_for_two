@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class User(
     @PrimaryKey
-    val name: String,
-    val color: Int
+    var name: String,
+    var color: Int
 )
