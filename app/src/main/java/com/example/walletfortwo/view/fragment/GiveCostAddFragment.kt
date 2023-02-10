@@ -108,8 +108,8 @@ class GiveCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
                 }
 
                 containerButtons.buttonAdd.setOnClickListener {
-                    val giveCost = GiveCost(0, containerDate.textDate.text.toString(), getName(fromUser?.name), getResource(fromUser?.color), getName(toUser?.name), getResource(toUser?.color),
-                        getName(expenditureItem?.name), getResource(expenditureItem?.resource), containerMoney.editTextMoney.text.toString().toInt(), containerRemarks.editTextRemarks.text.toString())
+                    val giveCost = GiveCost(0, containerDate.textDate.text.toString(), getId(fromUser?.id), getId(toUser?.id),
+                        getName(expenditureItem?.name), getId(expenditureItem?.resource), containerMoney.editTextMoney.text.toString().toInt(), containerRemarks.editTextRemarks.text.toString())
                     listener?.onAdd(giveCost)
                     parentFragmentManager.popBackStack()
                 }
@@ -138,9 +138,9 @@ class GiveCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
                 .setAdapter(ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, users)) { _, i ->
                     fromUser = viewModel?.getUser(users[i])
                     toUser = viewModel?.getToUser(users[i])
-                    binding.containerFromUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getResource(fromUser?.color)), PorterDuff.Mode.SRC_IN)
+                    binding.containerFromUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getId(fromUser?.color)), PorterDuff.Mode.SRC_IN)
                     binding.containerFromUser.textUser.text = getName(fromUser?.name)
-                    binding.containerToUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getResource(toUser?.color)), PorterDuff.Mode.SRC_IN)
+                    binding.containerToUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getId(toUser?.color)), PorterDuff.Mode.SRC_IN)
                     binding.containerToUser.textUser.text = getName(toUser?.name)
                     viewModel?.userValidation?.postValue(true)
                 }.show()
@@ -155,15 +155,14 @@ class GiveCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
             expenditureDialog = AlertDialog.Builder(requireContext())
                 .setView(recyclerView).show()
         }
-
     }
 
     private fun getName(name: String?): String {
         return name ?: ""
     }
 
-    private fun getResource(id: Int?): Int {
-        return id ?: 0
+    private fun getId(id: Int?): Int {
+        return id ?: 100
     }
 
     fun setListener(listener: OnAddListener) {

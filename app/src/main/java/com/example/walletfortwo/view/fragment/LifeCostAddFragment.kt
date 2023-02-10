@@ -104,8 +104,8 @@ class LifeCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
                 }
 
                 containerButtons.buttonAdd.setOnClickListener {
-                    val lifeCost = LifeCost(0, containerDate.textDate.text.toString(), getName(user?.name), getResource(user?.color),
-                        getName(expenditureItem?.name), getResource(expenditureItem?.resource), containerMoney.editTextMoney.text.toString().toInt(), containerRemarks.editTextRemarks.text.toString())
+                    val lifeCost = LifeCost(0, containerDate.textDate.text.toString(), getId(user?.id),
+                        getName(expenditureItem?.name), getId(expenditureItem?.resource), containerMoney.editTextMoney.text.toString().toInt(), containerRemarks.editTextRemarks.text.toString())
                     listener?.onAdd(lifeCost)
                     parentFragmentManager.popBackStack()
                 }
@@ -132,7 +132,7 @@ class LifeCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
             AlertDialog.Builder(requireContext())
                 .setAdapter(ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, users)) { _, i ->
                     user = it.getUser(users[i])
-                    binding.containerUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getResource(user?.color)), PorterDuff.Mode.SRC_IN)
+                    binding.containerUser.icUser.setColorFilter(ContextCompat.getColor(requireContext(), getId(user?.color)), PorterDuff.Mode.SRC_IN)
                     binding.containerUser.textUser.text = getName(user?.name)
                     viewModel?.userValidation?.postValue(true)
                 }.show()
@@ -155,8 +155,8 @@ class LifeCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
         return name ?: ""
     }
 
-    private fun getResource(id: Int?): Int {
-        return id ?: 0
+    private fun getId(id: Int?): Int {
+        return id ?: 100
     }
 
     fun setListener(listener: OnAddListener) {

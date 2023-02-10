@@ -6,6 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/ic_user_shadow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_user"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_name"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/icon_calendar"
+            app:tint="#80000000" />
+        <ImageView
             android:id="@+id/ic_user"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -16,13 +28,37 @@
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/icon_calendar"
             app:tint="@color/purple_200" />
+
         <TextView
             android:id="@+id/text_name"
             android:layout_width="0dp"
             android:layout_height="80dp"
+            android:layout_marginHorizontal="20dp"
             android:text="Myu"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_yen"/>
+        <EditText
+            android:id="@+id/edit_text_name"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="20dp"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:background="#00000000"
+            android:inputType="text"
+            android:hint="NAME"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_yen"/>
+        <View
+            android:id="@+id/view_name"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/purple_200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/text_yen"/>
@@ -31,26 +67,10 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:text="¥1,000,000"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/button_edit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_edit"
-            android:layout_width="match_parent"
-            android:layout_margin="20dp"
-            android:layout_height="60dp"
-            android:text="@string/label_edit"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/purple_200"
-            app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/label_today" />
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

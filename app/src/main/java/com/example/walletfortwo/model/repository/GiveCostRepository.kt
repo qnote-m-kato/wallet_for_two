@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.walletfortwo.model.GiveCost
+import com.example.walletfortwo.model.User
 import com.example.walletfortwo.model.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,17 +22,17 @@ object GiveCostRepository {
         }
     }
 
-    suspend fun getListWhereFromName(app: Application, name: String): List<GiveCost> {
+    suspend fun getListWhereFromName(app: Application, id: Int): List<GiveCost> {
         return withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
-            return@withContext db.GiveCostDao().getListWhereFromName(name)
+            return@withContext db.GiveCostDao().getListWhereFromName(id)
         }
     }
 
-    suspend fun getListWhereToName(app: Application, name: String): List<GiveCost> {
+    suspend fun getListWhereToName(app: Application, id: Int): List<GiveCost> {
         return withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
-            return@withContext db.GiveCostDao().getListWhereTomName(name)
+            return@withContext db.GiveCostDao().getListWhereTomName(id)
         }
     }
 
@@ -56,11 +57,4 @@ object GiveCostRepository {
     fun getAdd(): LiveData<GiveCost> = add
     fun getRemove(): LiveData<GiveCost> = remove
 
-    fun getAddList(): List<GiveCost> = addList
-    fun getRemoveList(): List<GiveCost> = remoteList
-
-    fun clearNotReflectedList() {
-        addList.clear()
-        remoteList.clear()
-    }
 }

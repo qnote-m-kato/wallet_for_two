@@ -8,10 +8,8 @@ data class GiveCost(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val date: String,
-    val fromUserName: String,
-    val fromUserResource: Int,
-    val toUserName: String,
-    val toUserResource: Int,
+    val fromUserId: Int,
+    val toUserId: Int,
     val expenditureItem: String,
     val expenditureItemResource: Int,
     val cost: Int,

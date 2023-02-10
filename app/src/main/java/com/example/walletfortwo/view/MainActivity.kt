@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
-                UserRepository.updateUser(application, User("Myu", R.color.teal_200))
-                UserRepository.updateUser(application, User("kobayashi", R.color.purple_700))
+                UserRepository.updateUser(application, User(0,"Myu", R.color.teal_200))
+                UserRepository.updateUser(application, User(1,"kobayashi", R.color.purple_700))
                 insertItem("家賃", R.drawable.ic_home)
                 insertItem("食費", R.drawable.ic_food)
                 insertItem("消耗品費", R.drawable.ic_store)
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 insertItem("水道代", R.drawable.ic_water)
                 insertItem("回線代", R.drawable.ic_wifi)
                 insertItem("その他", R.drawable.ic_more)
+                UserRepository.initUserList(application)
                 UserDetailRepository.initUserDetail(application)
             }
         }
@@ -51,6 +52,9 @@ class MainActivity : AppCompatActivity() {
         }
         GiveCostRepository.getRemove().observe(this) {
             UserDetailRepository.updateUserDetailGiveCost(false, it)
+        }
+        UserRepository.getEdit().observe(this) {
+            UserDetailRepository.updateUserDetailUser(it)
         }
     }
 

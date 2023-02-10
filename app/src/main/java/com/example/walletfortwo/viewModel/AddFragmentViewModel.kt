@@ -31,7 +31,7 @@ class AddFragmentViewModel(application: Application) : AndroidViewModel(applicat
 
     init {
         viewModelScope.launch {
-            userList.addAll(UserRepository.getUserList(app))
+            userList.addAll(UserRepository.getUsers())
             userList.forEach {
                 userNameList.add(it.name)
             }

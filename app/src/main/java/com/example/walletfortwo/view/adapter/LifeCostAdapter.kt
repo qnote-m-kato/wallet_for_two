@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.LayoutListItemCostBinding
 import com.example.walletfortwo.model.LifeCost
+import com.example.walletfortwo.model.repository.UserRepository
 
 class LifeCostAdapter(
     private val list: List<LifeCost>,
@@ -40,7 +41,7 @@ class LifeCostAdapter(
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
-            icUserA.setColorFilter(ContextCompat.getColor(context, list[position].userResource), PorterDuff.Mode.SRC_IN)
+            icUserA.setColorFilter(ContextCompat.getColor(context, UserRepository.getUserResource(list[position].userid)), PorterDuff.Mode.SRC_IN)
             icExpenditure.setImageResource(list[position].expenditureItemResource)
             textMoney.text = resources.getString(R.string.money_format).format(list[position].cost)
 

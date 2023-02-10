@@ -8,8 +8,7 @@ data class LifeCost(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val date: String,
-    val userName: String,
-    val userResource: Int,
+    val userid: Int,
     val expenditureItem: String,
     val expenditureItemResource: Int,
     val cost: Int,

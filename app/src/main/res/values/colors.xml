@@ -9,4 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#595959</color>
     <color name="light_gray">#C1C1C1</color>
+
+    <color name="user_red">#D10000</color>
+    <color name="user_blue">#0000D1</color>
+    <color name="user_light_green">#00D100</color>
+    <color name="user_pink">#FF95F4</color>
+    <color name="user_light_blue">#70C0FF</color>
+    <color name="user_green">#145C12</color>
+    <color name="user_orange">#FF802C</color>
+    <color name="user_yellow">#FFEA36</color>
+    <color name="user_purple">#6736BD</color>
+
 </resources>

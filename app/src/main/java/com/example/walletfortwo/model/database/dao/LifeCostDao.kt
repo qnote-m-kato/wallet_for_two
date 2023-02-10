@@ -8,8 +8,8 @@ interface LifeCostDao {
     @Query("SELECT * FROM LifeCost")
     fun getAll(): List<LifeCost>
 
-    @Query("SELECT * FROM LifeCost WHERE userName = :name")
-    fun getListWhereName(name: String): List<LifeCost>
+    @Query("SELECT * FROM LifeCost WHERE userId = :id")
+    fun getListWhereName(id: Int): List<LifeCost>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(lifeCost: LifeCost)

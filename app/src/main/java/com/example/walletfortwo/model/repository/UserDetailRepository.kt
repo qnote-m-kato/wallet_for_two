@@ -19,11 +19,11 @@ object UserDetailRepository {
     suspend fun initUserDetail(app: Application) {
         withContext(Dispatchers.IO) {
             userDetails.clear()
-            val users = UserRepository.getUserList(app)
+            val users = UserRepository.getUsers()
             users.forEach { user ->
-                val lifeCosts = LifeCostRepository.getListWhereName(app, user.name)
-                val giveFromCosts = GiveCostRepository.getListWhereFromName(app, user.name)
-                val giveToCosts = GiveCostRepository.getListWhereToName(app, user.name)
+                val lifeCosts = LifeCostRepository.getListWhereName(app, user.id)
+                val giveFromCosts = GiveCostRepository.getListWhereFromName(app, user.id)
+                val giveToCosts = GiveCostRepository.getListWhereToName(app, user.id)
                 var total = 0
 
                 lifeCosts.forEach {
@@ -44,9 +44,9 @@ object UserDetailRepository {
         }
     }
 
-    fun updateUserDetailUser(name: String, user: User) {
+    fun updateUserDetailUser( user: User) {
         userDetails.forEach {
-            if (it.user.name == name) {
+            if (it.user.id == user.id) {
                 it.user.name = user.name
                 it.user.color = user.color
                 update.postValue(true)
@@ -57,7 +57,7 @@ object UserDetailRepository {
 
     fun updateUserDetailLifeCost(isAdd: Boolean, lifeCost: LifeCost) {
         userDetails.forEach {
-            if (it.user.name == lifeCost.userName) {
+            if (it.user.id == lifeCost.userid) {
                 if (isAdd) {
                     it.lifeCosts.add(lifeCost)
                     it.totalCost += lifeCost.cost
@@ -73,7 +73,7 @@ object UserDetailRepository {
 
     fun updateUserDetailGiveCost(isAdd: Boolean, giveCost: GiveCost) {
         userDetails.forEach {
-            if (it.user.name == giveCost.fromUserName) {
+            if (it.user.id == giveCost.fromUserId) {
                 if (isAdd) {
                     it.giveCostsFrom.add(giveCost)
                     it.totalCost += giveCost.cost
@@ -106,9 +106,9 @@ object UserDetailRepository {
             }
         }
         val color = resources.getColor(R.color.black)
-        val life = mutableListOf<LifeCost>(LifeCost(0, "empty", "Empty", color, "Empty", 0, 0, ""))
-        val give = mutableListOf<GiveCost>(GiveCost(0, "empty", "Empty", color, "Empty", color, "Empty", 0, 0, ""))
-        return UserDetail(User("Empty", 0), 0, life, give, give)
+        val life = mutableListOf<LifeCost>(LifeCost(0, "empty", 100,  "Empty", 0, 0, ""))
+        val give = mutableListOf<GiveCost>(GiveCost(0, "empty", 200, 100, "Empty", 0, 0, ""))
+        return UserDetail(User(100,"Empty", 0), 0, life, give, give)
     }
 
     fun getUserDetails(): List<UserDetail> = userDetails

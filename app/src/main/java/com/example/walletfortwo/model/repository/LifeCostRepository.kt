@@ -22,10 +22,10 @@ object LifeCostRepository {
         }
     }
 
-    suspend fun getListWhereName(app: Application, name: String): List<LifeCost> {
+    suspend fun getListWhereName(app: Application, id: Int): List<LifeCost> {
         return withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
-            return@withContext db.LifeCostDao().getListWhereName(name)
+            return@withContext db.LifeCostDao().getListWhereName(id)
         }
     }
 
@@ -49,12 +49,4 @@ object LifeCostRepository {
 
     fun getAdd(): LiveData<LifeCost> = add
     fun getRemove(): LiveData<LifeCost> = remove
-
-    fun getAddList(): List<LifeCost> = addList
-    fun getRemoveList(): List<LifeCost> = removeList
-
-    fun clearNotReflectedList() {
-        addList.clear()
-        removeList.clear()
-    }
 }
