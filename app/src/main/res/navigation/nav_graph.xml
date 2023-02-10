@@ -53,6 +53,9 @@
         android:id="@+id/userDetailFragment"
         android:name="com.example.walletfortwo.view.fragment.UserDetailFragment"
         android:label="userDetailFragment">
+        <argument
+            android:name="user_name"
+            app:argType="string"/>
     </fragment>
 
     <fragment

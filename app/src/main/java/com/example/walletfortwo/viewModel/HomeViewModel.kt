@@ -32,9 +32,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun updateUserDetails() {
         if (userDetails.value != null) {
             userDetails.postValue(userDetails.value?.let { UserDetailRepository.updateUserDetails(it) })
-            Log.i("myu", "userDetails != null")
-        } else {
-            Log.i("myu", "userDetails == null")
+        }
+    }
+
+    fun setUserDetails() {
+        if (userDetails.value != null) {
+            UserDetailRepository.setUserDetails(userDetails.value!!)
         }
     }
 

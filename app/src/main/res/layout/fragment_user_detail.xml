@@ -21,20 +21,22 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:src="@drawable/ic_user"
-            app:layout_constraintTop_toBottomOf="@id/button_back"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_back"
             android:contentDescription="@string/icon_calendar"
             app:tint="@color/purple_200" />
 
         <TextView
-            android:id="@+id/text_user"
+            android:id="@+id/text_yen"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginVertical="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="30dp"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/button_back"
+            android:textSize="35sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/ic_user"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -42,16 +44,117 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/purple_200"
-            app:layout_constraintTop_toBottomOf="@id/text_user"
-            app:layout_constraintStart_toStartOf="@id/text_user"
-            app:layout_constraintEnd_toEndOf="@id/text_user" />
-        
+            app:layout_constraintTop_toBottomOf="@id/text_yen"
+            app:layout_constraintStart_toStartOf="@id/text_yen"
+            app:layout_constraintEnd_toEndOf="@id/text_yen" />
+
+        <LinearLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="15dp"
+            app:layout_constraintTop_toBottomOf="@id/text_yen"
+            android:baselineAligned="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_lifeCost"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="7dp">
+                <TextView
+                    android:id="@+id/text_lifeCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="自分"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <View
+                    android:id="@+id/lifeCost_under_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/purple_200"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_lifeCost"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_giveFrom"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="7dp">
+                <TextView
+                    android:id="@+id/text_giveFrom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="渡した"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <View
+                    android:id="@+id/giveFrom_under_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/light_gray"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_giveFrom"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_giveTo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="7dp">
+                <TextView
+                    android:id="@+id/text_giveTo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="貰った"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+                <View
+                    android:id="@+id/giveTo_under_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/light_gray"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_giveTo"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="20dp"
-            app:layout_constraintTop_toBottomOf="@id/text_user"
+            app:layout_constraintTop_toBottomOf="@id/tab"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
