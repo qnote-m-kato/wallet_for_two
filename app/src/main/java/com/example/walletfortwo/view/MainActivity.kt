@@ -1,5 +1,6 @@
 package com.example.walletfortwo.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -21,16 +22,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
-                UserRepository.updateUser(application, User(0,"Myu", R.color.teal_200))
-                UserRepository.updateUser(application, User(1,"kobayashi", R.color.purple_700))
-                insertItem("家賃", R.drawable.ic_home)
-                insertItem("食費", R.drawable.ic_food)
-                insertItem("消耗品費", R.drawable.ic_store)
-                insertItem("電気代", R.drawable.ic_light)
-                insertItem("ガス代", R.drawable.ic_fire)
-                insertItem("水道代", R.drawable.ic_water)
-                insertItem("回線代", R.drawable.ic_wifi)
-                insertItem("その他", R.drawable.ic_more)
+                val preferences = applicationContext.getSharedPreferences("PREFERENCE_KEY", Context.MODE_PRIVATE)
+                if (preferences.getBoolean("FIRST_BOOT", true)) {
+                    firstLaunch()
+                    preferences.edit().putBoolean("FIRST_BOOT", false).apply()
+                }
                 UserRepository.initUserList(application)
                 UserDetailRepository.initUserDetail(application)
             }
@@ -38,6 +34,19 @@ class MainActivity : AppCompatActivity() {
         observeChanged()
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setupWithNavController(navHostFragment.navController)
+    }
+
+    private suspend fun firstLaunch() {
+        UserRepository.updateUser(application, User(0,"User1", R.color.user_red))
+        UserRepository.updateUser(application, User(1,"User2", R.color.user_blue))
+        insertItem("家賃", R.drawable.ic_home)
+        insertItem("食費", R.drawable.ic_food)
+        insertItem("消耗品費", R.drawable.ic_store)
+        insertItem("電気代", R.drawable.ic_light)
+        insertItem("ガス代", R.drawable.ic_fire)
+        insertItem("水道代", R.drawable.ic_water)
+        insertItem("回線代", R.drawable.ic_wifi)
+        insertItem("その他", R.drawable.ic_more)
     }
 
     private fun observeChanged() {

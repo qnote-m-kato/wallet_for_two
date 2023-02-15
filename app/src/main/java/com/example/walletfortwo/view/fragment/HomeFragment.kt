@@ -115,6 +115,8 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
                 userAContainer.editTextName.hint = userAContainer.textName.text
                 userBContainer.editTextName.hint = userBContainer.textName.text
 
+                userAContainer.container.isEnabled = false
+                userBContainer.container.isEnabled = false
                 userAContainer.icUser.isEnabled = true
                 userBContainer.icUser.isEnabled = true
                 userAContainer.icUser.setOnClickListener {
@@ -155,6 +157,8 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
                     viewModel?.editUser(1, userBContainer.textName.text.toString(), userBColor)
                 }
 
+                userAContainer.container.isEnabled = true
+                userBContainer.container.isEnabled = true
                 userAContainer.icUser.isEnabled = false
                 userBContainer.icUser.isEnabled = false
 
@@ -165,7 +169,7 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
     private fun showSelectColorDialog(id: Int, color: Int) {
         val recyclerView = RecyclerView(requireContext())
         recyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = GridDialogAdapter(viewModel?.colorList!!, id, 0, requireContext(), this, viewLifecycleOwner)
+        recyclerView.adapter = GridDialogAdapter(viewModel?.colorList!!, id, color, requireContext(), this, viewLifecycleOwner)
         viewModel?.also {
             dialog = AlertDialog.Builder(requireContext())
                 .setView(recyclerView).show()
