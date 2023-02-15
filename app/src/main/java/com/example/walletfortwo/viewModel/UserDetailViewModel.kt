@@ -12,10 +12,27 @@ class UserDetailViewModel(application: Application, userName: String, resources:
     private val name = userName
     private val res = resources
     private val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
+    private var totalLife: Int = 0
+    private var totalFrom: Int = 0
+    private var totalTo: Int = 0
 
     init {
-        userDetail.postValue(UserDetailRepository.getUserDetail(name, res))
+        val user = UserDetailRepository.getUserDetail(name, res)
+        user.lifeCosts.forEach {
+            totalLife += it.cost
+        }
+        user.giveCostsFrom.forEach {
+            totalFrom += it.cost
+        }
+        user.giveCostsTo.forEach {
+            totalTo += it.cost
+        }
+        userDetail.postValue(user)
     }
 
     fun getUserDetail(): LiveData<UserDetail> = userDetail
+
+    fun getTotalLife(): Int = totalLife
+    fun getTotalFrom(): Int = totalFrom
+    fun getTotalTo(): Int = totalTo
 }

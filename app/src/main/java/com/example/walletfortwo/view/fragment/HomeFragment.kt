@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,9 @@ import com.example.walletfortwo.model.repository.UserDetailRepository
 import com.example.walletfortwo.view.adapter.GridDialogAdapter
 import com.example.walletfortwo.view.adapter.ListDialogAdapter
 import com.example.walletfortwo.viewModel.HomeViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 //ホーム画面
 class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
@@ -41,7 +45,6 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
             viewModel?.also { vm ->
                 UserDetailRepository.getUpdate().observe(viewLifecycleOwner) {
                     vm.update()
-                    Log.i("myu", "update")
                 }
                 vm.getUserDetails().observe(viewLifecycleOwner) {
                     if (it.size >= 2) {
@@ -56,10 +59,7 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
                         userBColor = userB.user.color
                         userBContainer.textName.text = userB.user.name
                         userBContainer.textYen.text = getString(R.string.cost_format).format(userB.totalCost)
-                        Log.i("myu", "getUserDetails")
                     }
-                    Log.i("myu", it.size.toString())
-
                 }
                 buttonSave.visibility = View.GONE
 
@@ -112,8 +112,8 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
 
                 userBContainer.textName.visibility = View.INVISIBLE
 
-                userAContainer.editTextName.hint = userAContainer.textName.text
-                userBContainer.editTextName.hint = userBContainer.textName.text
+                userAContainer.editTextName.hint = userA.user.name
+                userBContainer.editTextName.hint = userB.user.name
 
                 userAContainer.container.isEnabled = false
                 userBContainer.container.isEnabled = false
@@ -145,22 +145,24 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
 
                 userBContainer.textName.visibility = View.VISIBLE
 
-                if (userAContainer.editTextName.text.isNotEmpty()) {
-                    viewModel?.editUser(0, userAContainer.editTextName.text.toString(), userAColor)
-                } else {
-                    viewModel?.editUser(0, userAContainer.textName.text.toString(), userAColor)
-                }
-
-                if (userBContainer.editTextName.text.isNotEmpty()) {
-                    viewModel?.editUser(1, userBContainer.editTextName.text.toString(), userBColor)
-                } else {
-                    viewModel?.editUser(1, userBContainer.textName.text.toString(), userBColor)
-                }
-
                 userAContainer.container.isEnabled = true
                 userBContainer.container.isEnabled = true
                 userAContainer.icUser.isEnabled = false
                 userBContainer.icUser.isEnabled = false
+
+                val nameA = if (userAContainer.editTextName.text.isNotEmpty()) {
+                    userAContainer.editTextName.text.toString()
+                } else {
+                    userAContainer.textName.text.toString()
+                }
+
+                val nameB = if (userBContainer.editTextName.text.isNotEmpty()) {
+                    userBContainer.editTextName.text.toString()
+                } else {
+                    userBContainer.textName.text.toString()
+                }
+
+                viewModel?.editUser(0, nameA, userAColor, 1, nameB, userBColor)
 
             }
         }

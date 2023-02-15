@@ -38,7 +38,7 @@ class UserDetailFragment : Fragment() {
             viewModel?.also { vm ->
                 vm.getUserDetail().observe(viewLifecycleOwner) {
                     icUser.setColorFilter(ContextCompat.getColor(requireContext(), it.user.color))
-                    textYen.text = getString(R.string.cost_format).format(it.totalCost)
+                    textYen.text = getString(R.string.cost_format).format(vm.getTotalLife())
                     lifeCostAdapter = UserDetailAdapter(it.lifeCosts, true, requireContext(), resources, viewLifecycleOwner)
                     giveCostFromAdapter = UserDetailAdapter(it.giveCostsFrom, false, requireContext(), resources, viewLifecycleOwner)
                     giveCostToAdapter = UserDetailAdapter(it.giveCostsTo, false, requireContext(), resources, viewLifecycleOwner)
@@ -75,6 +75,7 @@ class UserDetailFragment : Fragment() {
                 setUnderLineColor(R.color.purple_200, R.color.light_gray, R.color.light_gray)
                 if (adapterType != 0) {
                     adapterType = 0
+                    textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalLife())
                     list.adapter = lifeCostAdapter
                     lifeCostAdapter.notifyDataSetChanged()
                 }
@@ -83,6 +84,7 @@ class UserDetailFragment : Fragment() {
                 setUnderLineColor(R.color.light_gray, R.color.purple_200, R.color.light_gray)
                 if (adapterType != 1) {
                     adapterType = 1
+                    textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalFrom())
                     list.adapter = giveCostFromAdapter
                     giveCostFromAdapter.notifyDataSetChanged()
                 }
@@ -91,6 +93,7 @@ class UserDetailFragment : Fragment() {
                 setUnderLineColor(R.color.light_gray, R.color.light_gray, R.color.purple_200)
                 if (adapterType != 2) {
                     adapterType = 2
+                    textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalTo())
                     list.adapter = giveCostToAdapter
                     giveCostToAdapter.notifyDataSetChanged()
                 }
