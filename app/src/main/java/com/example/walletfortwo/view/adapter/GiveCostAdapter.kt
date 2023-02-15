@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.LayoutListItemCostBinding
 import com.example.walletfortwo.model.GiveCost
+import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.repository.UserRepository
 
 class GiveCostAdapter(
-    private val list: List<GiveCost>,
+    private var list: List<GiveCost>,
     private val context: Context,
     private val listener: OnSelectItemListener,
     private val resources: Resources,
@@ -37,6 +38,8 @@ class GiveCostAdapter(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+            textYear.text = list[position].date.substring(0, 4)
+            textMd.text = list[position].date.substring(5)
             icArrow.visibility = View.VISIBLE
             icUserB.visibility = View.VISIBLE
 
@@ -73,6 +76,11 @@ class GiveCostAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun notifyDataSetChanged(newList: List<GiveCost>) {
+        list = newList
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(val binding: LayoutListItemCostBinding) : RecyclerView.ViewHolder(binding.root)
 }

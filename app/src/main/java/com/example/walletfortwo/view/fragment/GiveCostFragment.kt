@@ -17,20 +17,32 @@ import com.example.walletfortwo.view.adapter.LifeCostAdapter
 import com.example.walletfortwo.viewModel.GiveCostViewModel
 
 //お金を渡したリストの画面
-class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener {
+class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener, SelectDateDialogFragment.OnSelectItemListener {
     private val viewModel by lazy {
         activity?.application?.let {
             ViewModelProvider(this)[GiveCostViewModel::class.java]
         }
     }
+
+    private lateinit var binding: FragmentListBinding
+    private lateinit var giveCostAdapter: GiveCostAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragmentListBinding.inflate(inflater, container, false).apply {
+        binding = FragmentListBinding.inflate(inflater, container, false).apply {
             list.layoutManager = LinearLayoutManager(requireContext())
             viewModel?.also { vm ->
                 vm.getFlag().observe(viewLifecycleOwner) {
-                    list.adapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
+                    giveCostAdapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
+                    list.adapter = giveCostAdapter
                 }
             }
+
+            selectDate.setOnClickListener {
+                val dialogFragment = SelectDateDialogFragment()
+                dialogFragment.setListener(this@GiveCostFragment)
+                dialogFragment.show(childFragmentManager, "")
+            }
+
             addButton.setOnClickListener {
                 val fragment = GiveCostAddFragment.newInstance().apply {
                     setListener(this@GiveCostFragment)
@@ -39,7 +51,8 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
                 fragmentTransaction?.addToBackStack(null)
                 fragmentTransaction?.replace(R.id.full_screen_fragment, fragment)?.commit()
             }
-        }.root
+        }
+        return binding.root
     }
 
     override fun onSelect(item: GiveCost) {
@@ -54,5 +67,14 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
 
     override fun onAdd(giveCost: GiveCost) {
         viewModel?.add(giveCost)
+    }
+
+    override fun onSelectDate(year: Int, month: Int) {
+        var date = getString(R.string.date_format_2).format(year, month)
+        if (month == 0) {
+            date = "全期間"
+        }
+        binding.selectDate.text = date
+        giveCostAdapter.notifyDataSetChanged(viewModel?.searchDate(date)!!)
     }
 }

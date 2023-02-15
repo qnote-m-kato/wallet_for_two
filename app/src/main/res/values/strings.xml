@@ -10,6 +10,7 @@
     <string name="label_edit">編集</string>
 
     <string name="date_format">%d/%02d/%02d</string>
+    <string name="date_format_2">%d/%02d</string>
     <string name="money_format">%,d</string>
     <string name="cost_format">¥%,d</string>
 </resources>

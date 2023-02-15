@@ -40,6 +40,9 @@ class UserDetailAdapter<T> (
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
+            textYear.text = getYear(list[position])
+            textMd.text = getMD(list[position])
+
             icExpenditure.setImageResource(getExpenditure(list[position]))
             textMoney.text = resources.getString(R.string.money_format).format(getCost(list[position]))
 
@@ -65,6 +68,22 @@ class UserDetailAdapter<T> (
                 containerRemarks.visibility = View.GONE
             }
 
+        }
+    }
+
+    private fun getYear(item: T): String {
+        return if (isLifeCost) {
+            (item as LifeCost).date.substring(0, 4)
+        } else {
+            (item as GiveCost).date.substring(0, 4)
+        }
+    }
+
+    private fun getMD(item: T): String {
+        return if (isLifeCost) {
+            (item as LifeCost).date.substring(5)
+        } else {
+            (item as GiveCost).date.substring(5)
         }
     }
 

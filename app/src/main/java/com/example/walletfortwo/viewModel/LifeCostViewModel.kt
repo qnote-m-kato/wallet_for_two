@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.repository.LifeCostRepository
 import kotlinx.coroutines.launch
+import java.time.Year
 
 class LifeCostViewModel(application: Application) : AndroidViewModel(application) {
     private val app: Application = application
@@ -33,15 +34,26 @@ class LifeCostViewModel(application: Application) : AndroidViewModel(application
     fun add(lifeCost: LifeCost) {
         viewModelScope.launch {
             LifeCostRepository.insert(app, lifeCost)
-            lifeCosts.add(lifeCost)
+            lifeCosts.add(0, lifeCost)
             changeFlag.postValue(true)
         }
     }
 
-    fun getList(): List<LifeCost> {
-        lifeCosts.reverse()
-        return lifeCosts
-    }
+    fun getList(): List<LifeCost> = lifeCosts
 
     fun getFlag(): LiveData<Boolean> = changeFlag
+
+    fun searchDate(date: String): List<LifeCost> {
+        return if (date == "全期間") {
+            lifeCosts
+        } else {
+            val newList = mutableListOf<LifeCost>()
+            lifeCosts.forEach {
+                if (it.date.startsWith(date)) {
+                    newList.add(it)
+                }
+            }
+            newList
+        }
+    }
 }

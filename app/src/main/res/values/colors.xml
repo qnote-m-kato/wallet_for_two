@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#595959</color>
     <color name="light_gray">#C1C1C1</color>
+    <color name="grid_background">#EEEEEE</color>
 
     <color name="user_red">#D10000</color>
     <color name="user_blue">#0000D1</color>

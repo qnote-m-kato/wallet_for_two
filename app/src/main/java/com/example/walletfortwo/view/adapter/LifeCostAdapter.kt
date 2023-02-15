@@ -15,7 +15,7 @@ import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.repository.UserRepository
 
 class LifeCostAdapter(
-    private val list: List<LifeCost>,
+    private var list: List<LifeCost>,
     private val context: Context,
     private val listener: OnSelectItemListener,
     private val resources: Resources,
@@ -38,6 +38,8 @@ class LifeCostAdapter(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
+            textYear.text = list[position].date.substring(0, 4)
+            textMd.text = list[position].date.substring(5)
             icArrow.visibility = View.GONE
             icUserB.visibility = View.GONE
 
@@ -74,6 +76,11 @@ class LifeCostAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun notifyDataSetChanged(newList: List<LifeCost>) {
+        list = newList
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(val binding: LayoutListItemCostBinding) : RecyclerView.ViewHolder(binding.root)
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.walletfortwo.model.GiveCost
+import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.repository.GiveCostRepository
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,7 @@ class GiveCostViewModel(application: Application) : AndroidViewModel(application
     fun add(giveCost: GiveCost) {
         viewModelScope.launch {
             GiveCostRepository.insert(app, giveCost)
-            giveCosts.add(giveCost)
+            giveCosts.add(0, giveCost)
             changeFlag.postValue(true)
         }
     }
@@ -38,9 +39,21 @@ class GiveCostViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun getList(): List<GiveCost> {
-        giveCosts.reverse()
-        return giveCosts
+    fun searchDate(date: String): List<GiveCost> {
+        return if (date == "全期間") {
+            giveCosts
+        } else {
+            val newList = mutableListOf<GiveCost>()
+            giveCosts.forEach {
+                if (it.date.startsWith(date)) {
+                    newList.add(it)
+                }
+            }
+            newList
+        }
     }
+
+    fun getList(): List<GiveCost> = giveCosts
+
     fun getFlag(): LiveData<Boolean> = changeFlag
 }
