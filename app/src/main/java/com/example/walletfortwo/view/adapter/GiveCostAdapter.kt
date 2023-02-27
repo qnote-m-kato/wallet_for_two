@@ -48,7 +48,8 @@ class GiveCostAdapter(
             icExpenditure.setImageResource(list[position].expenditureItemResource)
             textMoney.text = resources.getString(R.string.money_format).format(list[position].cost)
 
-            if (list[position].remarks != null) {
+            if (list[position].remarks != "") {
+                textRemarks.text = list[position].remarks
                 icDown.setColorFilter(ContextCompat.getColor(context, R.color.purple_200))
                 icDown.isEnabled = true
             } else {
