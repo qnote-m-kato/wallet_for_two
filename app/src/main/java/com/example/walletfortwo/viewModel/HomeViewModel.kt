@@ -37,8 +37,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun editUser(id: Int, name: String, color: Int, id2: Int, name2: String, color2: Int) {
         viewModelScope.launch {
-            UserRepository.updateUser(app, User(id, name, color))
-            UserRepository.updateUser(app, User(id2, name2, color2))
+            UserRepository.updateUser(app, User(id, name, color), User(id2, name2, color2))
         }
     }
 

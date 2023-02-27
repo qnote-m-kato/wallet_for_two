@@ -61,27 +61,20 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
                         userBContainer.textYen.text = getString(R.string.cost_format).format(userB.totalCost)
                     }
                 }
+
                 buttonSave.visibility = View.GONE
 
                 userAContainer.icUserShadow.visibility = View.GONE
                 userAContainer.editTextName.visibility = View.GONE
                 userAContainer.viewName.visibility = View.GONE
+                userAContainer.icUser.isEnabled = false
+                userAContainer.container.isEnabled = true
 
                 userBContainer.icUserShadow.visibility = View.GONE
                 userBContainer.editTextName.visibility = View.GONE
                 userBContainer.viewName.visibility = View.GONE
-
-                userAContainer.container.setOnClickListener {
-                    if (::userA.isInitialized) {
-                        findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userA.user.name))
-                    }
-                }
-
-                userBContainer.container.setOnClickListener {
-                    if (::userB.isInitialized) {
-                        findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userB.user.name))
-                    }
-                }
+                userBContainer.icUser.isEnabled = false
+                userBContainer.container.isEnabled = true
 
             }
 
@@ -97,58 +90,17 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
     private fun editUser() {
         binding.apply {
             buttonEdit.setOnClickListener {
-                buttonEdit.visibility = View.GONE
-                buttonSave.visibility = View.VISIBLE
-
-                userAContainer.icUserShadow.visibility = View.VISIBLE
-                userAContainer.editTextName.visibility = View.VISIBLE
-                userAContainer.viewName.visibility = View.VISIBLE
-
-                userAContainer.textName.visibility = View.INVISIBLE
-
-                userBContainer.icUserShadow.visibility = View.VISIBLE
-                userBContainer.editTextName.visibility = View.VISIBLE
-                userBContainer.viewName.visibility = View.VISIBLE
-
-                userBContainer.textName.visibility = View.INVISIBLE
+                setOnClickListener()
+                changeEditView(true)
 
                 userAContainer.editTextName.hint = userA.user.name
                 userBContainer.editTextName.hint = userB.user.name
-
-                userAContainer.container.isEnabled = false
-                userBContainer.container.isEnabled = false
-                userAContainer.icUser.isEnabled = true
-                userBContainer.icUser.isEnabled = true
-                userAContainer.icUser.setOnClickListener {
-                    showSelectColorDialog(0, userBColor)
-                }
-
-                userBContainer.icUser.setOnClickListener {
-                    showSelectColorDialog(1, userAColor)
-                }
             }
 
             buttonSave.setOnClickListener {
 
-                buttonEdit.visibility = View.VISIBLE
-                buttonSave.visibility = View.GONE
-
-                userAContainer.icUserShadow.visibility = View.GONE
-                userAContainer.editTextName.visibility = View.GONE
-                userAContainer.viewName.visibility = View.GONE
-
-                userAContainer.textName.visibility = View.VISIBLE
-
-                userBContainer.icUserShadow.visibility = View.GONE
-                userBContainer.editTextName.visibility = View.GONE
-                userBContainer.viewName.visibility = View.GONE
-
-                userBContainer.textName.visibility = View.VISIBLE
-
-                userAContainer.container.isEnabled = true
-                userBContainer.container.isEnabled = true
-                userAContainer.icUser.isEnabled = false
-                userBContainer.icUser.isEnabled = false
+                setOnClickListener()
+                changeEditView(false)
 
                 val nameA = if (userAContainer.editTextName.text.isNotEmpty()) {
                     userAContainer.editTextName.text.toString()
@@ -164,6 +116,57 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
 
                 viewModel?.editUser(0, nameA, userAColor, 1, nameB, userBColor)
 
+            }
+        }
+    }
+
+    private fun changeEditView(isEdit: Boolean) {
+        val viewState1 = if (isEdit) View.GONE else View.VISIBLE
+        val viewState2 = if (isEdit) View.VISIBLE else View.GONE
+        binding.apply {
+            buttonEdit.visibility = viewState1
+            buttonSave.visibility = viewState2
+
+            userAContainer.textName.visibility = viewState1
+            userBContainer.textName.visibility = viewState1
+
+            userAContainer.editTextName.visibility = viewState2
+            userBContainer.editTextName.visibility = viewState2
+
+            userAContainer.icUserShadow.visibility = viewState2
+            userBContainer.icUserShadow.visibility = viewState2
+
+            userAContainer.viewName.visibility = viewState2
+            userBContainer.viewName.visibility = viewState2
+
+            userAContainer.icUser.isEnabled = isEdit
+            userBContainer.icUser.isEnabled = isEdit
+
+            userAContainer.container.isEnabled = !isEdit
+            userBContainer.container.isEnabled = !isEdit
+        }
+    }
+
+    private fun setOnClickListener() {
+        binding.apply {
+            userAContainer.container.setOnClickListener {
+                if (::userA.isInitialized) {
+                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userA.user.name))
+                }
+            }
+
+            userBContainer.container.setOnClickListener {
+                if (::userB.isInitialized) {
+                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userB.user.name))
+                }
+            }
+
+            userAContainer.icUser.setOnClickListener {
+                showSelectColorDialog(0, userBColor)
+            }
+
+            userBContainer.icUser.setOnClickListener {
+                showSelectColorDialog(1, userAColor)
             }
         }
     }

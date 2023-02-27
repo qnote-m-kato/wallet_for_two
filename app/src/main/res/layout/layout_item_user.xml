@@ -13,7 +13,7 @@
             android:layout_marginStart="10dp"
             android:src="@drawable/ic_user"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_name"
+            app:layout_constraintBottom_toTopOf="@id/spacer"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/icon_calendar"
             app:tint="#80000000" />
@@ -24,10 +24,19 @@
             android:layout_margin="10dp"
             android:src="@drawable/ic_user"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/text_name"
+            app:layout_constraintBottom_toTopOf="@id/spacer"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/icon_calendar"
             app:tint="@color/purple_200" />
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/text_yen"/>
 
         <TextView
             android:id="@+id/text_name"

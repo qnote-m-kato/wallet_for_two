@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun firstLaunch() {
-        UserRepository.updateUser(application, User(0,"User1", R.color.user_red))
-        UserRepository.updateUser(application, User(1,"User2", R.color.user_blue))
+        UserRepository.updateUser(application, User(0,"User1", R.color.user_red), User(1,"User2", R.color.user_blue))
         insertItem("家賃", R.drawable.ic_home)
         insertItem("食費", R.drawable.ic_food)
         insertItem("消耗品費", R.drawable.ic_store)

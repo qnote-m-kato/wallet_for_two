@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object UserRepository {
-    private val edit: MutableLiveData<User> = MutableLiveData()
+    private val edit: MutableLiveData<List<User>> = MutableLiveData()
     private val users: MutableList<User> = mutableListOf()
 
     suspend fun getUser(app: Application, name: String): User {
@@ -27,11 +27,13 @@ object UserRepository {
         }
     }
 
-    suspend fun updateUser(app: Application, user: User) {
+    suspend fun updateUser(app: Application, user: User, user2: User) {
         withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.UserDao().insert(user)
-            edit.postValue(user)
+            db.UserDao().insert(user2)
+            val list = mutableListOf(user, user2)
+            edit.postValue(list)
         }
     }
 
@@ -51,5 +53,5 @@ object UserRepository {
 
     fun getUsers(): List<User> = users
 
-    fun getEdit(): LiveData<User> = edit
+    fun getEdit(): LiveData<List<User>> = edit
 }

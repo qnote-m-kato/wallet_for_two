@@ -44,13 +44,14 @@ object UserDetailRepository {
         }
     }
 
-    fun updateUserDetailUser( user: User) {
+    fun updateUserDetailUser( user: List<User>) {
         userDetails.forEach {
-            if (it.user.id == user.id) {
-                it.user.name = user.name
-                it.user.color = user.color
-                update.postValue(true)
-                return
+            user.forEach { user ->
+                if (it.user.id == user.id) {
+                    it.user.name = user.name
+                    it.user.color = user.color
+                    update.postValue(true)
+                }
             }
         }
     }
