@@ -67,14 +67,10 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
                 userAContainer.icUserShadow.visibility = View.GONE
                 userAContainer.editTextName.visibility = View.GONE
                 userAContainer.viewName.visibility = View.GONE
-                userAContainer.icUser.isEnabled = false
-                userAContainer.container.isEnabled = true
 
                 userBContainer.icUserShadow.visibility = View.GONE
                 userBContainer.editTextName.visibility = View.GONE
                 userBContainer.viewName.visibility = View.GONE
-                userBContainer.icUser.isEnabled = false
-                userBContainer.container.isEnabled = true
 
             }
 
@@ -84,22 +80,39 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        editUser()
+        setOnClickListener()
     }
 
-    private fun editUser() {
+    private fun setOnClickListener() {
         binding.apply {
+            userAContainer.container.setOnClickListener {
+                if (::userA.isInitialized) {
+                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userA.user.name))
+                }
+            }
+
+            userBContainer.container.setOnClickListener {
+                if (::userB.isInitialized) {
+                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userB.user.name))
+                }
+            }
+
             buttonEdit.setOnClickListener {
-                setOnClickListener()
                 changeEditView(true)
+
+                userAContainer.icUser.setOnClickListener {
+                    showSelectColorDialog(0, userBColor)
+                }
+
+                userBContainer.icUser.setOnClickListener {
+                    showSelectColorDialog(1, userAColor)
+                }
 
                 userAContainer.editTextName.hint = userA.user.name
                 userBContainer.editTextName.hint = userB.user.name
             }
 
             buttonSave.setOnClickListener {
-
-                setOnClickListener()
                 changeEditView(false)
 
                 val nameA = if (userAContainer.editTextName.text.isNotEmpty()) {
@@ -127,6 +140,9 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
             buttonEdit.visibility = viewState1
             buttonSave.visibility = viewState2
 
+            userAContainer.container.visibility = viewState1
+            userBContainer.container.visibility = viewState1
+
             userAContainer.textName.visibility = viewState1
             userBContainer.textName.visibility = viewState1
 
@@ -141,33 +157,6 @@ class HomeFragment : Fragment(), GridDialogAdapter.OnSelectItemListener {
 
             userAContainer.icUser.isEnabled = isEdit
             userBContainer.icUser.isEnabled = isEdit
-
-            userAContainer.container.isEnabled = !isEdit
-            userBContainer.container.isEnabled = !isEdit
-        }
-    }
-
-    private fun setOnClickListener() {
-        binding.apply {
-            userAContainer.container.setOnClickListener {
-                if (::userA.isInitialized) {
-                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userA.user.name))
-                }
-            }
-
-            userBContainer.container.setOnClickListener {
-                if (::userB.isInitialized) {
-                    findNavController().navigate(HomeFragmentDirections.homeToUserDetail(userB.user.name))
-                }
-            }
-
-            userAContainer.icUser.setOnClickListener {
-                showSelectColorDialog(0, userBColor)
-            }
-
-            userBContainer.icUser.setOnClickListener {
-                showSelectColorDialog(1, userAColor)
-            }
         }
     }
 
