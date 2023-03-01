@@ -12,8 +12,6 @@ import kotlinx.coroutines.withContext
 object GiveCostRepository {
     private val add: MutableLiveData<GiveCost> = MutableLiveData()
     private val remove: MutableLiveData<GiveCost> = MutableLiveData()
-    private val addList: MutableList<GiveCost> = mutableListOf()
-    private val remoteList: MutableList<GiveCost> = mutableListOf()
 
     suspend fun getAll(app: Application): List<GiveCost> {
         return withContext(Dispatchers.IO) {
@@ -41,7 +39,6 @@ object GiveCostRepository {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.GiveCostDao().insert(giveCost)
             add.postValue(giveCost)
-            addList.add(giveCost)
         }
     }
 
@@ -50,7 +47,6 @@ object GiveCostRepository {
             val db = AppDatabase.getInstance(app.applicationContext)
             db.GiveCostDao().delete(giveCost)
             remove.postValue(giveCost)
-            remoteList.add(giveCost)
         }
     }
 

@@ -83,7 +83,6 @@ object UserDetailRepository {
                     it.totalCost -= giveCost.cost
                 }
                 update.postValue(true)
-                return
             } else {
                 if (isAdd) {
                     it.giveCostsTo.add(giveCost)
@@ -93,7 +92,6 @@ object UserDetailRepository {
                     it.totalCost += giveCost.cost
                 }
                 update.postValue(true)
-                return
             }
         }
     }
