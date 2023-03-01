@@ -32,6 +32,7 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
                 vm.getFlag().observe(viewLifecycleOwner) {
                     giveCostAdapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
                     list.adapter = giveCostAdapter
+                    giveCostAdapter.submitList(vm.getList())
                 }
             }
 
