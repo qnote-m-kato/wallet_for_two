@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.LayoutListItemCostBinding
@@ -20,7 +21,7 @@ class LifeCostAdapter(
     private val listener: OnSelectItemListener,
     private val resources: Resources,
     private val lifecycleOwner: LifecycleOwner,
-): RecyclerView.Adapter<LifeCostAdapter.ViewHolder>() {
+): ListAdapter<LifeCost, LifeCostAdapter.ViewHolder>(DiffCallback<LifeCost>(true)) {
 
     interface OnSelectItemListener {
         fun onSelect(item: LifeCost)
@@ -75,12 +76,6 @@ class LifeCostAdapter(
         }
     }
 
-    override fun getItemCount(): Int = list.size
-
-    fun notifyDataSetChanged(newList: List<LifeCost>) {
-        list = newList
-        notifyDataSetChanged()
-    }
-
     class ViewHolder(val binding: LayoutListItemCostBinding) : RecyclerView.ViewHolder(binding.root)
+
 }

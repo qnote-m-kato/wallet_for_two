@@ -1,13 +1,10 @@
 package com.example.walletfortwo.view.fragment
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +12,6 @@ import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.FragmentListBinding
 import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.view.adapter.LifeCostAdapter
-import com.example.walletfortwo.view.adapter.UserDetailAdapter
 import com.example.walletfortwo.viewModel.LifeCostViewModel
 
 //生活費のリストの画面
@@ -35,6 +31,7 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
                 vm.getFlag().observe(viewLifecycleOwner) {
                     lifeCostAdapter = LifeCostAdapter(vm.getList(), requireContext(), this@LifeCostFragment, resources, viewLifecycleOwner)
                     list.adapter = lifeCostAdapter
+                    lifeCostAdapter.submitList(vm.getList())
                 }
             }
 
@@ -76,6 +73,7 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
             date = "全期間"
         }
         binding.selectDate.text = date
-        lifeCostAdapter.notifyDataSetChanged(viewModel?.searchDate(date)!!)
+
+        lifeCostAdapter.submitList(viewModel?.searchDate(date)!!)
     }
 }

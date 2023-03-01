@@ -1,7 +1,6 @@
 package com.example.walletfortwo.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.FragmentListBinding
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.view.adapter.GiveCostAdapter
-import com.example.walletfortwo.view.adapter.LifeCostAdapter
 import com.example.walletfortwo.viewModel.GiveCostViewModel
 
 //お金を渡したリストの画面
@@ -75,6 +73,6 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
             date = "全期間"
         }
         binding.selectDate.text = date
-        giveCostAdapter.notifyDataSetChanged(viewModel?.searchDate(date)!!)
+        giveCostAdapter.submitList(viewModel?.searchDate(date)!!)
     }
 }

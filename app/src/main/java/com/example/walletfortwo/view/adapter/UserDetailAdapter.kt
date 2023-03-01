@@ -8,20 +8,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.LayoutListItemCostBinding
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
 
-class UserDetailAdapter<T> (
-    private val list: List<T>,
+class UserDetailAdapter<Item : Any> (
+    private val list: List<Item>,
     private val isLifeCost: Boolean,
     private val context: Context,
     private val resources: Resources,
     private val lifecycleOwner: LifecycleOwner,
-): RecyclerView.Adapter<UserDetailAdapter.ViewHolder>() {
-
+): ListAdapter<Item, UserDetailAdapter.ViewHolder>(DiffCallback<Item>(isLifeCost)) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutListItemCostBinding.inflate(LayoutInflater.from(parent.context))
@@ -71,7 +71,7 @@ class UserDetailAdapter<T> (
         }
     }
 
-    private fun getYear(item: T): String {
+    private fun getYear(item: Item): String {
         return if (isLifeCost) {
             (item as LifeCost).date.substring(0, 4)
         } else {
@@ -79,7 +79,7 @@ class UserDetailAdapter<T> (
         }
     }
 
-    private fun getMD(item: T): String {
+    private fun getMD(item: Item): String {
         return if (isLifeCost) {
             (item as LifeCost).date.substring(5)
         } else {
@@ -87,7 +87,7 @@ class UserDetailAdapter<T> (
         }
     }
 
-    private fun getExpenditure(item: T): Int {
+    private fun getExpenditure(item: Item): Int {
         return if (isLifeCost) {
             (item as LifeCost).expenditureItemResource
         } else {
@@ -95,7 +95,7 @@ class UserDetailAdapter<T> (
         }
     }
 
-    private fun getCost(item: T): Int {
+    private fun getCost(item: Item): Int {
         return if (isLifeCost) {
             (item as LifeCost).cost
         } else {
@@ -103,7 +103,7 @@ class UserDetailAdapter<T> (
         }
     }
 
-    private fun  getRemarks(item: T): String {
+    private fun  getRemarks(item: Item): String {
         val remarks: String? = if (isLifeCost) {
             (item as LifeCost).remarks
         } else {

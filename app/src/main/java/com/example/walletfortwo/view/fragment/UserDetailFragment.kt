@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +14,7 @@ import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.FragmentUserDetailBinding
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
+import com.example.walletfortwo.model.UserDetail
 import com.example.walletfortwo.view.adapter.UserDetailAdapter
 import com.example.walletfortwo.viewModel.UserDetailViewModel
 import com.example.walletfortwo.viewModel.viewModelFactory.UserDetailViewModelFactory
@@ -45,15 +45,15 @@ class UserDetailFragment : Fragment() {
 
                     list.adapter = when (adapterType) {
                         0 -> {
-                            lifeCostAdapter.notifyDataSetChanged()
+                            lifeCostAdapter.submitList(it.lifeCosts)
                             lifeCostAdapter
                         }
                         1 -> {
-                            giveCostFromAdapter.notifyDataSetChanged()
+                            giveCostFromAdapter.submitList(it.giveCostsFrom)
                             giveCostFromAdapter
                         }
                         else -> {
-                            giveCostToAdapter.notifyDataSetChanged()
+                            giveCostToAdapter.submitList(it.giveCostsTo)
                             giveCostToAdapter
                         }
                     }
@@ -77,7 +77,7 @@ class UserDetailFragment : Fragment() {
                     adapterType = 0
                     textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalLife())
                     list.adapter = lifeCostAdapter
-                    lifeCostAdapter.notifyDataSetChanged()
+                    lifeCostAdapter.submitList(getUserDetail().lifeCosts)
                 }
             }
             containerGiveFrom.setOnClickListener {
@@ -86,7 +86,7 @@ class UserDetailFragment : Fragment() {
                     adapterType = 1
                     textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalFrom())
                     list.adapter = giveCostFromAdapter
-                    giveCostFromAdapter.notifyDataSetChanged()
+                    giveCostFromAdapter.submitList(getUserDetail().giveCostsFrom)
                 }
             }
             containerGiveTo.setOnClickListener {
@@ -95,7 +95,7 @@ class UserDetailFragment : Fragment() {
                     adapterType = 2
                     textYen.text = getString(R.string.cost_format).format(viewModel?.getTotalTo())
                     list.adapter = giveCostToAdapter
-                    giveCostToAdapter.notifyDataSetChanged()
+                    giveCostToAdapter.submitList(getUserDetail().giveCostsTo)
                 }
             }
         }
@@ -106,5 +106,9 @@ class UserDetailFragment : Fragment() {
         binding.giveFromUnderLine.setBackgroundColor(ContextCompat.getColor(requireContext(), giveFrom))
         binding.giveToUnderLine.setBackgroundColor(ContextCompat.getColor(requireContext(), giveTo))
 
+    }
+
+    private fun getUserDetail(): UserDetail {
+        return viewModel?.getUserDetail()?.value!!
     }
 }
