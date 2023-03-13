@@ -15,7 +15,7 @@ import com.example.walletfortwo.view.adapter.LifeCostAdapter
 import com.example.walletfortwo.viewModel.LifeCostViewModel
 
 //生活費のリストの画面
-class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeCostAddFragment.OnAddListener, SelectDateDialogFragment.OnSelectItemListener {
+class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeCostAddFragment.OnAddListener, SelectDateDialogFragment.OnSelectItemListener, FilterByItemDialogFragment.OnReflectListener {
     private val viewModel by lazy {
         activity?.application?.let {
             ViewModelProvider(this)[LifeCostViewModel::class.java]
@@ -23,6 +23,7 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
     }
     private lateinit var binding: FragmentListBinding
     private lateinit var lifeCostAdapter: LifeCostAdapter
+    private var checkList: List<Boolean> = mutableListOf(true, true, true, true, true, true, true, true)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding =  FragmentListBinding.inflate(inflater, container, false).apply {
@@ -32,11 +33,18 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
                     lifeCostAdapter = LifeCostAdapter(vm.getList(), requireContext(), this@LifeCostFragment, resources, viewLifecycleOwner)
                     list.adapter = lifeCostAdapter
                     lifeCostAdapter.submitList(vm.getList())
+                    textSelectDate.text = "全期間"
                 }
             }
 
-            selectDate.setOnClickListener {
+            buttonSelectDate.setOnClickListener {
                 val dialogFragment = SelectDateDialogFragment()
+                dialogFragment.setListener(this@LifeCostFragment)
+                dialogFragment.show(childFragmentManager, "")
+            }
+
+            searchMenu.setOnClickListener {
+                val dialogFragment = FilterByItemDialogFragment.newInstance(checkList)
                 dialogFragment.setListener(this@LifeCostFragment)
                 dialogFragment.show(childFragmentManager, "")
             }
@@ -72,8 +80,13 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
         if (month == 0) {
             date = "全期間"
         }
-        binding.selectDate.text = date
+        binding.textSelectDate.text = date
 
-        lifeCostAdapter.submitList(viewModel?.searchDate(date)!!)
+        lifeCostAdapter.submitList(viewModel?.filterDate(date)!!)
+    }
+
+    override fun onReflect(checkList: List<Boolean>) {
+        this.checkList = checkList
+        lifeCostAdapter.submitList(viewModel?.filterItem(checkList, resources)!!)
     }
 }

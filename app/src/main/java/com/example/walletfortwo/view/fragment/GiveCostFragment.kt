@@ -32,11 +32,11 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
                 vm.getFlag().observe(viewLifecycleOwner) {
                     giveCostAdapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
                     list.adapter = giveCostAdapter
-                    giveCostAdapter.submitList(vm.getList())
+                    giveCostAdapter.submitList(vm.searchDate(textSelectDate.text.toString()))
                 }
             }
 
-            selectDate.setOnClickListener {
+            buttonSelectDate.setOnClickListener {
                 val dialogFragment = SelectDateDialogFragment()
                 dialogFragment.setListener(this@GiveCostFragment)
                 dialogFragment.show(childFragmentManager, "")
@@ -73,7 +73,7 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
         if (month == 0) {
             date = "全期間"
         }
-        binding.selectDate.text = date
+        binding.textSelectDate.text = date
         giveCostAdapter.submitList(viewModel?.searchDate(date)!!)
     }
 }

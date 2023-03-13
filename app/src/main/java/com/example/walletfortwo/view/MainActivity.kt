@@ -38,14 +38,14 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun firstLaunch() {
         UserRepository.updateUser(application, User(0,"User1", R.color.user_red), User(1,"User2", R.color.user_blue))
-        insertItem("家賃", R.drawable.ic_home)
-        insertItem("食費", R.drawable.ic_food)
-        insertItem("消耗品費", R.drawable.ic_store)
-        insertItem("電気代", R.drawable.ic_light)
-        insertItem("ガス代", R.drawable.ic_fire)
-        insertItem("水道代", R.drawable.ic_water)
-        insertItem("回線代", R.drawable.ic_wifi)
-        insertItem("その他", R.drawable.ic_more)
+        insertItem(getString(R.string.label_rent), R.drawable.ic_home)
+        insertItem(getString(R.string.label_food), R.drawable.ic_food)
+        insertItem(getString(R.string.label_expense), R.drawable.ic_store)
+        insertItem(getString(R.string.label_electric), R.drawable.ic_light)
+        insertItem(getString(R.string.label_gas), R.drawable.ic_fire)
+        insertItem(getString(R.string.label_water), R.drawable.ic_water)
+        insertItem(getString(R.string.label_wifi), R.drawable.ic_wifi)
+        insertItem(getString(R.string.label_other), R.drawable.ic_more)
     }
 
     private fun observeChanged() {

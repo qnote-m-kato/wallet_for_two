@@ -13,4 +13,13 @@
     <string name="date_format_2">%d/%02d</string>
     <string name="money_format">%,d</string>
     <string name="cost_format">¥%,d</string>
+
+    <string name="label_rent">家賃</string>
+    <string name="label_food">食費</string>
+    <string name="label_expense">消耗品費</string>
+    <string name="label_electric">電気代</string>
+    <string name="label_gas">ガス代</string>
+    <string name="label_water">水道代</string>
+    <string name="label_wifi">回線代</string>
+    <string name="label_other">その他</string>
 </resources>

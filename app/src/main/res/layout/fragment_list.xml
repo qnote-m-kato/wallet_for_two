@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/select_date"
+            android:id="@+id/text_select_date"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -13,19 +13,36 @@
             android:text="全期間"
             android:textSize="28sp"
             android:gravity="center"
-            android:drawableEnd="@drawable/ic_calendar"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/button_select_date"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/search_menu"/>
+        <ImageView
+            android:id="@+id/search_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/light_gray"
-            app:layout_constraintTop_toBottomOf="@id/select_date"/>
+            app:layout_constraintTop_toBottomOf="@id/text_select_date"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/select_date"
+            app:layout_constraintTop_toBottomOf="@id/text_select_date"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
