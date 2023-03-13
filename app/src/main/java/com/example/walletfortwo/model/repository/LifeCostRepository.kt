@@ -48,37 +48,23 @@ object LifeCostRepository {
     }
 
     fun filter(isFilterDate: Boolean, filter: List<String>): List<LifeCost> {
-        val newList = mutableListOf<LifeCost>()
-        currentList.forEach {
-            kotlin.run loop@{
-                filter.forEach { item ->
-                    if (isFilterDate && it.date.startsWith(item)) {
-                        newList.add(it)
-                        return@loop
-                    } else if (!isFilterDate && it.expenditureItem == item) {
-                        newList.add(it)
-                        return@loop
-                    }
-                }
-            }
+        val newList = if (isFilterDate) {
+            currentList.filter { it.date.startsWith(filter[0]) }
+        } else {
+            currentList.filter { filter.contains(it.expenditureItem) }
         }
 
         return newList
     }
 
     fun filter(date: List<LifeCost>, item: List<LifeCost>): List<LifeCost> {
-        val newList = mutableListOf<LifeCost>()
-        date.forEach {
-            kotlin.run loop@{
-                item.forEach { item ->
-                   if (it.id == item.id) {
-                       newList.add(item)
-                       return@loop
-                   }
-                }
+        val newList = date.filter {a ->
+            item.any { b ->
+                a.id == b.id
             }
         }
-        return newList
+
+        return newList.distinct()
     }
 
     fun getAdd(): LiveData<LifeCost> = add
