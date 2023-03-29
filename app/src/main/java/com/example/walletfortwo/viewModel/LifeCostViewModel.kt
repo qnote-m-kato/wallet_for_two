@@ -55,7 +55,6 @@ class LifeCostViewModel(application: Application) : AndroidViewModel(application
         if (date == "全期間") {
             filterDate.addAll(LifeCostRepository.getCurrentList())
         } else {
-
             filterDate.addAll(LifeCostRepository.filter(true, mutableListOf(date)))
         }
 

@@ -162,7 +162,7 @@ class GiveCostAddFragment : Fragment(), ListDialogAdapter.OnSelectItemListener {
     }
 
     private fun getId(id: Int?): Int {
-        return id ?: 100
+        return id ?: Int.MAX_VALUE
     }
 
     fun setListener(listener: OnAddListener) {
