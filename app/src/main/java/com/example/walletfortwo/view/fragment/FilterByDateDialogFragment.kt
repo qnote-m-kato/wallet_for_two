@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.example.walletfortwo.databinding.LayoutDialogSelectDateBinding
+import com.example.walletfortwo.databinding.LayoutDialogFilterByDateBinding
 import java.time.LocalDate
 
-class SelectDateDialogFragment : DialogFragment() {
+class FilterByDateDialogFragment : DialogFragment() {
 
     interface OnSelectItemListener {
         fun onSelectDate(year: Int, month: Int)
@@ -18,7 +18,7 @@ class SelectDateDialogFragment : DialogFragment() {
     private var nowYear = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return LayoutDialogSelectDateBinding.inflate(inflater, container, false).apply {
+        return LayoutDialogFilterByDateBinding.inflate(inflater, container, false).apply {
             nowYear = LocalDate.now().year
             dateYear.text = nowYear.toString()
 

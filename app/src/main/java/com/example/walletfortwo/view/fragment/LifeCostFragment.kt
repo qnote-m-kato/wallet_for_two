@@ -15,7 +15,7 @@ import com.example.walletfortwo.view.adapter.LifeCostAdapter
 import com.example.walletfortwo.viewModel.LifeCostViewModel
 
 //生活費のリストの画面
-class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeCostAddFragment.OnAddListener, SelectDateDialogFragment.OnSelectItemListener, FilterByItemDialogFragment.OnReflectListener {
+class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeCostAddFragment.OnAddListener, FilterByDateDialogFragment.OnSelectItemListener, FilterByItemDialogFragment.OnReflectListener {
     private val viewModel by lazy {
         activity?.application?.let {
             ViewModelProvider(this)[LifeCostViewModel::class.java]
@@ -38,7 +38,7 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
             }
 
             buttonSelectDate.setOnClickListener {
-                val dialogFragment = SelectDateDialogFragment()
+                val dialogFragment = FilterByDateDialogFragment()
                 dialogFragment.setListener(this@LifeCostFragment)
                 dialogFragment.show(childFragmentManager, "")
             }

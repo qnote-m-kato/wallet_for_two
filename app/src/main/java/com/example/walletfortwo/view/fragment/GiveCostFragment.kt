@@ -15,7 +15,7 @@ import com.example.walletfortwo.view.adapter.GiveCostAdapter
 import com.example.walletfortwo.viewModel.GiveCostViewModel
 
 //お金を渡したリストの画面
-class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener, SelectDateDialogFragment.OnSelectItemListener {
+class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener, FilterByDateDialogFragment.OnSelectItemListener {
     private val viewModel by lazy {
         activity?.application?.let {
             ViewModelProvider(this)[GiveCostViewModel::class.java]
@@ -37,7 +37,7 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
             }
 
             buttonSelectDate.setOnClickListener {
-                val dialogFragment = SelectDateDialogFragment()
+                val dialogFragment = FilterByDateDialogFragment()
                 dialogFragment.setListener(this@GiveCostFragment)
                 dialogFragment.show(childFragmentManager, "")
             }
