@@ -32,63 +32,14 @@ class SelectDateDialogFragment : DialogFragment() {
                 dateYear.text = nowYear.toString()
             }
 
-            january.setOnClickListener {
-                selectMonth(1)
-            }
-
-            february.setOnClickListener {
-                selectMonth(2)
-            }
-
-            march.setOnClickListener {
-                selectMonth(3)
-            }
-
-            april.setOnClickListener {
-                selectMonth(4)
-            }
-
-            may.setOnClickListener {
-                selectMonth(5)
-            }
-
-            june.setOnClickListener {
-                selectMonth(6)
-            }
-
-            july.setOnClickListener {
-                selectMonth(7)
-            }
-
-            august.setOnClickListener {
-                selectMonth(8)
-            }
-
-            september.setOnClickListener {
-                selectMonth(9)
-            }
-
-            october.setOnClickListener {
-                selectMonth(10)
-            }
-
-            november.setOnClickListener {
-                selectMonth(11)
-            }
-
-            december.setOnClickListener {
-                selectMonth(12)
-            }
-
-            all.setOnClickListener {
-                selectMonth(0)
+            val buttonList = mutableListOf(all, january, february, march, april, may, june, july, august, september, october, november, december)
+            buttonList.forEachIndexed { index, month ->
+                month.setOnClickListener {
+                    listener?.onSelectDate(nowYear, index)
+                    dismiss()
+                }
             }
         }.root
-    }
-
-    private fun selectMonth(month: Int) {
-        listener?.onSelectDate(nowYear, month)
-        dismiss()
     }
 
     fun setListener(listener: OnSelectItemListener) {
