@@ -26,52 +26,34 @@ class FilterByItemDialogFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return LayoutDialogFilterByItemBinding.inflate(inflater, container, false).apply {
             val current = arguments?.getBooleanArray("list")?.toList()
+            val itemList = mutableListOf(rent, food, expense, electric, gas, water, wifi, other)
             if (current != null) {
-                rent.isChecked = current[0]
-                food.isChecked = current[1]
-                expense.isChecked = current[2]
-                electric.isChecked = current[3]
-                gas.isChecked = current[4]
-                water.isChecked = current[5]
-                wifi.isChecked = current[6]
-                other.isChecked = current[7]
+                itemList.forEachIndexed { index, item ->
+                    item.isChecked = current[index]
+                }
             }
 
             allSelect.setOnClickListener {
-                setChecked(this, true)
+                itemList.forEach {
+                    it.isChecked = true
+                }
             }
 
             allLift.setOnClickListener {
-                setChecked(this, false)
+                itemList.forEach {
+                    it.isChecked = false
+                }
             }
 
             buttonReflect.setOnClickListener {
                 val list = mutableListOf<Boolean>()
-                list.add(0, rent.isChecked)
-                list.add(1, food.isChecked)
-                list.add(2, expense.isChecked)
-                list.add(3, electric.isChecked)
-                list.add(4, gas.isChecked)
-                list.add(5, water.isChecked)
-                list.add(6, wifi.isChecked)
-                list.add(7, other.isChecked)
+                itemList.forEachIndexed { index, item ->
+                    list.add(index, item.isChecked)
+                }
                 listener?.onReflect(list)
                 dismiss()
             }
         }.root
-    }
-
-    private fun setChecked(binding: LayoutDialogFilterByItemBinding, isChecked: Boolean) {
-        binding.apply {
-            rent.isChecked = isChecked
-            food.isChecked = isChecked
-            expense.isChecked = isChecked
-            electric.isChecked = isChecked
-            gas.isChecked = isChecked
-            water.isChecked = isChecked
-            wifi.isChecked = isChecked
-            other.isChecked = isChecked
-        }
     }
 
     fun setListener(listener: OnReflectListener) {
