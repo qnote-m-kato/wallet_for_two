@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object ExpenditureItemRepository {
+    private val itemList = mutableListOf(R.string.label_rent, R.string.label_food, R.string.label_expense, R.string.label_electric, R.string.label_gas, R.string.label_water, R.string.label_wifi, R.string.label_other)
     suspend fun getAll(app: Application): List<ExpenditureItem> {
         return withContext(Dispatchers.IO) {
             val db = AppDatabase.getInstance(app.applicationContext)
@@ -25,18 +26,9 @@ object ExpenditureItemRepository {
 
     fun filterItem(items: List<Boolean>, res: Resources): List<String> {
         val list = mutableListOf<String>()
-        items.forEachIndexed { index, b ->
-            if (b) {
-                when (index) {
-                    0 -> list.add(res.getString(R.string.label_rent))
-                    1 -> list.add(res.getString(R.string.label_food))
-                    2 -> list.add(res.getString(R.string.label_expense))
-                    3 -> list.add(res.getString(R.string.label_electric))
-                    4 -> list.add(res.getString(R.string.label_gas))
-                    5 -> list.add(res.getString(R.string.label_water))
-                    6 -> list.add(res.getString(R.string.label_wifi))
-                    else -> list.add(res.getString(R.string.label_other))
-                }
+        items.forEachIndexed { index, isChecked ->
+            if (isChecked) {
+                list.add(res.getString(itemList[index]))
             }
         }
         return list

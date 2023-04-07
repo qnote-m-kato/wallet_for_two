@@ -1,10 +1,8 @@
 package com.example.walletfortwo.model.repository
 
 import android.app.Application
-import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.walletfortwo.R
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.model.User
@@ -26,17 +24,10 @@ object UserDetailRepository {
                 val giveToCosts = GiveCostRepository.getListWhereToName(app, user.id)
                 var total = 0
 
-                lifeCosts.forEach {
-                    total += it.cost
-                }
+                total += lifeCosts.sumOf { it.cost }
+                total += giveFromCosts.sumOf { it.cost }
+                total -= giveToCosts.sumOf { it.cost }
 
-                giveFromCosts.forEach {
-                    total += it.cost
-                }
-
-                giveToCosts.forEach {
-                    total -= it.cost
-                }
                 userDetails.add(UserDetail(user, total,
                     lifeCosts.toMutableList(), giveFromCosts.toMutableList(), giveToCosts.toMutableList()))
             }
@@ -96,7 +87,7 @@ object UserDetailRepository {
         }
     }
 
-    fun getUserDetail(name: String, resources: Resources): UserDetail {
+    fun getUserDetail(name: String): UserDetail {
         if (userDetails.isNotEmpty()) {
             userDetails.forEach {
                 if (it.user.name == name) {
@@ -104,9 +95,8 @@ object UserDetailRepository {
                 }
             }
         }
-        val color = resources.getColor(R.color.black)
-        val life = mutableListOf<LifeCost>(LifeCost(0, "empty", 100,  "Empty", 0, 0, ""))
-        val give = mutableListOf<GiveCost>(GiveCost(0, "empty", 200, 100, "Empty", 0, 0, ""))
+        val life = mutableListOf(LifeCost(0, "empty", 100,  "Empty", 0, 0, ""))
+        val give = mutableListOf(GiveCost(0, "empty", 200, 100, "Empty", 0, 0, ""))
         return UserDetail(User(100,"Empty", 0), 0, life, give, give)
     }
 
