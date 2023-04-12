@@ -8,16 +8,15 @@ import androidx.lifecycle.MutableLiveData
 import com.example.walletfortwo.model.UserDetail
 import com.example.walletfortwo.model.repository.UserDetailRepository
 
-class UserDetailViewModel(application: Application, userName: String, resources: Resources) : AndroidViewModel(application) {
+class UserDetailViewModel(application: Application, userName: String) : AndroidViewModel(application) {
     private val name = userName
-    private val res = resources
     private val userDetail: MutableLiveData<UserDetail> = MutableLiveData()
     private var totalLife: Int = 0
     private var totalFrom: Int = 0
     private var totalTo: Int = 0
 
     init {
-        val user = UserDetailRepository.getUserDetail(name, res)
+        val user = UserDetailRepository.getUserDetail(name)
         user.lifeCosts.forEach {
             totalLife += it.cost
         }

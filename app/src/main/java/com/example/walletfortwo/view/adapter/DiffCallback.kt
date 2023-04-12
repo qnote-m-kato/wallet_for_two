@@ -1,5 +1,6 @@
 package com.example.walletfortwo.view.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.example.walletfortwo.model.GiveCost
 import com.example.walletfortwo.model.LifeCost

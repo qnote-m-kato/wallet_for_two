@@ -1,6 +1,7 @@
 package com.example.walletfortwo.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,17 +77,26 @@ class LifeCostFragment : Fragment(), LifeCostAdapter.OnSelectItemListener, LifeC
     }
 
     override fun onSelectDate(year: Int, month: Int) {
-        var date = getString(R.string.date_format_2).format(year, month)
-        if (month == 0) {
-            date = "全期間"
+        val date = if (month == 0) {
+            "全期間"
+        } else {
+            getString(R.string.date_format_2).format(year, month)
         }
         binding.textSelectDate.text = date
 
-        lifeCostAdapter.submitList(viewModel?.filterDate(date)!!)
+        submitList(viewModel?.filterDate(date)!!)
     }
 
     override fun onReflect(checkList: List<Boolean>) {
         this.checkList = checkList
-        lifeCostAdapter.submitList(viewModel?.filterItem(checkList, resources)!!)
+        submitList(viewModel?.filterItem(checkList, resources)!!)
+    }
+
+    private fun submitList(filterList: List<LifeCost>) {
+        // CurrentListとNewListの内容が全く異なっているときに表示されるデータがおかしくなることがある
+        // 元となるListを先に反映させることで正しい結果を表示できた
+        lifeCostAdapter.submitList(viewModel?.getList()) {
+            lifeCostAdapter.submitList(filterList)
+        }
     }
 }

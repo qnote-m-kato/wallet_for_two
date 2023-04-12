@@ -24,7 +24,7 @@ class UserDetailFragment : Fragment() {
     private val args: UserDetailFragmentArgs by navArgs()
     private val viewModel by lazy {
         activity?.application?.let {
-            ViewModelProvider(this, UserDetailViewModelFactory(it, args.userName, resources))[UserDetailViewModel::class.java]
+            ViewModelProvider(this, UserDetailViewModelFactory(it, args.userName))[UserDetailViewModel::class.java]
         }
     }
     private lateinit var binding: FragmentUserDetailBinding
