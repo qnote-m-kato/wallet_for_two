@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.walletfortwo.R
 import com.example.walletfortwo.databinding.FragmentListBinding
 import com.example.walletfortwo.model.GiveCost
+import com.example.walletfortwo.model.LifeCost
 import com.example.walletfortwo.view.adapter.GiveCostAdapter
 import com.example.walletfortwo.viewModel.GiveCostViewModel
 
 //お金を渡したリストの画面
-class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener, FilterByDateDialogFragment.OnSelectItemListener {
+class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveCostAddFragment.OnAddListener, FilterByDateDialogFragment.OnSelectItemListener, FilterByItemDialogFragment.OnReflectListener {
     private val viewModel by lazy {
         activity?.application?.let {
             ViewModelProvider(this)[GiveCostViewModel::class.java]
@@ -24,6 +25,7 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
 
     private lateinit var binding: FragmentListBinding
     private lateinit var giveCostAdapter: GiveCostAdapter
+    private var checkList: List<Boolean> = mutableListOf(true, true, true, true, true, true, true, true)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListBinding.inflate(inflater, container, false).apply {
@@ -32,12 +34,18 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
                 vm.getFlag().observe(viewLifecycleOwner) {
                     giveCostAdapter = GiveCostAdapter(vm.getList(), requireContext(), this@GiveCostFragment, resources, viewLifecycleOwner)
                     list.adapter = giveCostAdapter
-                    giveCostAdapter.submitList(vm.searchDate(textSelectDate.text.toString()))
+                    giveCostAdapter.submitList(vm.getList())
                 }
             }
 
             buttonSelectDate.setOnClickListener {
                 val dialogFragment = FilterByDateDialogFragment()
+                dialogFragment.setListener(this@GiveCostFragment)
+                dialogFragment.show(childFragmentManager, "")
+            }
+
+            searchMenu.setOnClickListener {
+                val dialogFragment = FilterByItemDialogFragment.newInstance(checkList)
                 dialogFragment.setListener(this@GiveCostFragment)
                 dialogFragment.show(childFragmentManager, "")
             }
@@ -74,6 +82,20 @@ class GiveCostFragment : Fragment(), GiveCostAdapter.OnSelectItemListener, GiveC
             date = "全期間"
         }
         binding.textSelectDate.text = date
-        giveCostAdapter.submitList(viewModel?.searchDate(date)!!)
+        submitList(viewModel?.filterDate(date)!!)
     }
+
+    override fun onReflect(checkList: List<Boolean>) {
+        this.checkList = checkList
+        submitList(viewModel?.filterItem(checkList, resources)!!)
+    }
+
+    private fun submitList(filterList: List<GiveCost>) {
+        // CurrentListとNewListの内容が全く異なっているときに表示されるデータがおかしくなることがある
+        // 元となるListを先に反映させることで正しい結果を表示できた
+        giveCostAdapter.submitList(viewModel?.getList()) {
+            giveCostAdapter.submitList(filterList)
+        }
+    }
+
 }
